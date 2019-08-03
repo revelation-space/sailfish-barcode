@@ -103,6 +103,7 @@ BarcodeScanner::Private::Private(BarcodeScanner* aParent) :
     iGrabbing(false),
     iScanning(false),
     iAbortScan(false),
+    iTimedOut(false),
     iRotation(0),
     iLastKnownState(Idle),
     iViewFinderItem(NULL),
