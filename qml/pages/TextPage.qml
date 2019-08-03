@@ -171,7 +171,7 @@ ContactCard { id: card; PullDownMenu { MenuItem { id: saveMenu; onClicked: page.
                         textPage, "ContactPage")
                     pageStack.push(page, {
                         contact: textPage.vcard.contact(),
-                        parentPage: textPage,
+                        allowedOrientations: textPage.allowedOrientations,
                         //: Pulley menu item (saves contact)
                         //% "Save"
                         saveText: qsTrId("contact-menu-save")
