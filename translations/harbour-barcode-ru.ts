@@ -66,7 +66,7 @@
     <message id="scan-status-busy">
         <source>Scan in progress ...</source>
         <extracomment>Scan status label</extracomment>
-        <translation>Сканирование ...</translation>
+        <translation>Сканирование…</translation>
     </message>
     <message id="scan-status-nothing_found">
         <source>No code detected! Try again.</source>
@@ -91,7 +91,7 @@
     <message id="settings-autoscan-label">
         <source>Scan on start</source>
         <extracomment>Switch button text</extracomment>
-        <translation>Сканировать при старте</translation>
+        <translation>Сканировать при запуске</translation>
     </message>
     <message id="settings-save_images-label">
         <source>Save barcode images</source>
@@ -210,6 +210,36 @@
         <source>Contact card</source>
         <extracomment>Button text</extracomment>
         <translation>Карточка контакта</translation>
+    </message>
+    <message id="text-fetch_receipt">
+        <source>Fetch receipt</source>
+        <extracomment>Button text</extracomment>
+        <translation>Загрузить чек</translation>
+    </message>
+    <message id="text-fetching_receipt">
+        <source>Fetching...</source>
+        <extracomment>Button text</extracomment>
+        <translation>Загрузка…</translation>
+    </message>
+    <message id="text-cancel_fetching">
+        <source>Cancel</source>
+        <extracomment>Button label (cancel network operation)</extracomment>
+        <translation>Стоп</translation>
+    </message>
+    <message id="text-fetch_contacting">
+        <source>Contacting %1...</source>
+        <extracomment>Progress label</extracomment>
+        <translation>Отправляем запрос на %1…</translation>
+    </message>
+    <message id="text-receipt_not_found">
+        <source>Receipt not found</source>
+        <extracomment>Status label</extracomment>
+        <translation>Чек не найден :(</translation>
+    </message>
+    <message id="text-network_error">
+        <source>Network error</source>
+        <extracomment>Status label</extracomment>
+        <translation>Не удалось связаться с сервером</translation>
     </message>
     <message id="contact-menu-save">
         <source>Save</source>

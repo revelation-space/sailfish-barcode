@@ -25,6 +25,7 @@ THE SOFTWARE.
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import harbour.barcode 1.0
 
 import "../js/Utils.js" as Utils
 
@@ -67,6 +68,12 @@ Page {
             // Hide the keyboard on flick
             textArea.focus = false
         }
+    }
+
+    ReceiptFetcher {
+        id: receiptFetcher
+
+        code: textPage.text
     }
 
     SilicaFlickable {
@@ -133,59 +140,147 @@ Page {
 
             Button {
                 id: button
+
+                readonly property bool isLink: Utils.isLink(textPage.text)
+                readonly property bool isReceipt: receiptFetcher.state !== ReceiptFetcher.StateIdle
+                readonly property bool isContact: textPage.haveContact
+
                 anchors.horizontalCenter: parent.horizontalCenter
-                //: Button text
-                //% "Open link"
-                text: qsTrId("text-open_link")
-                visible: Utils.isLink(textPage.text)
+                text: {
+                    if (isLink) {
+                        //: Button text
+                        //% "Open link"
+                        return qsTrId("text-open_link")
+                    } else if (isContact) {
+                        //: Button text
+                        //% "Contact card"
+                        return qsTrId("text-contact_card")
+                    } else if (receiptFetcher.state === ReceiptFetcher.StateChecking) {
+                        return holdOffTimer.running ?
+                            //: Button text
+                            //% "Fetching..."
+                            qsTrId("text-fetching_receipt") :
+                            //: Button label (cancel network operation)
+                            //% "Cancel"
+                            qsTrId("text-cancel_fetching")
+                    } else {
+                        //: Button text
+                        //% "Fetch receipt"
+                        return qsTrId("text-fetch_receipt")
+                    }
+                }
+                visible: isLink || isReceipt || isContact
                 enabled: !holdOffTimer.running
                 onClicked: {
-                    console.log("opening", textPage.text)
-                    Qt.openUrlExternally(textPage.text)
-                    holdOffTimer.restart()
+                    if (isLink) {
+                        console.log("opening", textPage.text)
+                        Qt.openUrlExternally(textPage.text)
+                        holdOffTimer.restart()
+                    } else if (isContact) {
+                        // Workaround for Sailfish.Contacts not being allowed in harbour apps
+                        var page = Qt.createQmlObject("import QtQuick 2.0;import Sailfish.Silica 1.0;import Sailfish.Contacts 1.0; \
+    Page { id: page; signal saveContact(); property alias contact: card.contact; property alias saveText: saveMenu.text; \
+    ContactCard { id: card; PullDownMenu { MenuItem { id: saveMenu; onClicked: page.saveContact(); }}}}",
+                            textPage, "ContactPage")
+                        pageStack.push(page, {
+                            allowedOrientations: textPage.allowedOrientations,
+                            contact: textPage.vcard.contact(),
+                            //: Pulley menu item (saves contact)
+                            //% "Save"
+                            saveText: qsTrId("contact-menu-save")
+                        }).saveContact.connect(function() {
+                           pageStack.pop()
+                           textPage.vcard.importContact()
+                        })
+                    } else if (receiptFetcher.state === ReceiptFetcher.StateChecking) {
+                        receiptFetcher.cancel()
+                    } else {
+                        // Fetch Receipt
+                        holdOffTimer.restart()
+                        receiptFetcher.fetch()
+                    }
                 }
                 Timer {
                     id: holdOffTimer
+
                     interval: 2000
                 }
             }
 
             Item {
-                visible: button.visible
-                height: Theme.paddingLarge
-                width: parent.width
-            }
+                readonly property bool isChecking: receiptFetcher.state === ReceiptFetcher.StateChecking
+                readonly property bool isError: receiptFetcher.state === ReceiptFetcher.StateFailure
 
-            Button {
-                id: contactButton
-                anchors.horizontalCenter: parent.horizontalCenter
-                //: Button text
-                //% "Contact card"
-                text: qsTrId("text-contact_card")
-                visible: haveContact
-                onClicked: {
-                    // Workaround for Sailfish.Contacts not being allowed in harbour apps
-                    var page = Qt.createQmlObject("import QtQuick 2.0;import Sailfish.Silica 1.0;import Sailfish.Contacts 1.0; \
-Page { id: page; signal saveContact(); property alias contact: card.contact; property alias saveText: saveMenu.text; \
-ContactCard { id: card; PullDownMenu { MenuItem { id: saveMenu; onClicked: page.saveContact(); }}}}",
-                        textPage, "ContactPage")
-                    pageStack.push(page, {
-                        contact: textPage.vcard.contact(),
-                        allowedOrientations: textPage.allowedOrientations,
-                        //: Pulley menu item (saves contact)
-                        //% "Save"
-                        saveText: qsTrId("contact-menu-save")
-                    }).saveContact.connect(function() {
-                       pageStack.pop()
-                       textPage.vcard.importContact()
-                    })
+                visible: height > 0
+                height: (isChecking || isError) ? Theme.itemSizeSmall : button.visible ? Theme.paddingLarge : 0
+                width: parent.width
+
+                Row {
+                    anchors.centerIn: parent
+                    spacing: Theme.paddingMedium
+                    visible: opacity > 0
+                    opacity: parent.isChecking ? 1 : 0
+
+                    BusyIndicator {
+                        running: parent.opacity != 0
+                        size: BusyIndicatorSize.ExtraSmall
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                    Label {
+                        anchors.verticalCenter: parent.verticalCenter
+                        font.pixelSize: Theme.fontSizeSmall
+                        truncationMode: TruncationMode.Fade
+                        color: Theme.highlightColor
+                        //: Progress label
+                        //% "Contacting %1..."
+                        text: qsTrId("text-fetch_contacting").arg(receiptFetcher.host)
+                    }
+                    Behavior on opacity { FadeAnimation {} }
                 }
+
+                Label {
+                    anchors.centerIn: parent
+                    font.pixelSize: Theme.fontSizeSmall
+                    truncationMode: TruncationMode.Fade
+                    verticalAlignment: Text.AlignVCenter
+                    color: Theme.highlightColor
+                    visible: opacity > 0
+                    opacity: parent.isError ? 1 : 0
+                    text: {
+                        switch (receiptFetcher.error) {
+                        case ReceiptFetcher.ErrorNotFound:
+                            //: Status label
+                            //% "Receipt not found"
+                            return qsTrId("text-receipt_not_found")
+                        case ReceiptFetcher.ErrorNetwork:
+                            //: Status label
+                            //% "Network error"
+                            return qsTrId("text-network_error")
+                        }
+                        return ""
+                    }
+                    Behavior on opacity { FadeAnimation {} }
+                }
+
+                Behavior on height { SmoothedAnimation { duration: 100 } }
             }
 
             Item {
-                visible: contactButton.visible
-                height: Theme.paddingLarge
                 width: parent.width
+                height: receiptView.item ? (receiptView.item.height + Theme.paddingLarge) : 0
+                visible: receiptView.active
+
+                Loader {
+                    id: receiptView
+
+                    width: parent.width
+                    source: receiptFetcher.state === ReceiptFetcher.StateSuccess ? "../components/HtmlView.qml" : ""
+                    onStatusChanged: {
+                        if (status == Loader.Ready) {
+                            item.htmlBody = receiptFetcher.receipt
+                        }
+                    }
+                }
             }
 
             Image {

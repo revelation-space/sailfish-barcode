@@ -45,6 +45,7 @@ THE SOFTWARE.
 #include "Database.h"
 #include "HistoryImageProvider.h"
 #include "HistoryModel.h"
+#include "OfdReceiptFetcher.h"
 #include "Settings.h"
 
 #ifndef APP_VERSION
@@ -60,6 +61,7 @@ static void register_types(QQmlEngine* engine, const char* uri, int v1, int v2)
     qmlRegisterType<HarbourDisplayBlanking>(uri, v1, v2, "DisplayBlanking");
     qmlRegisterType<HarbourTemporaryFile>(uri, v1, v2, "TemporaryFile");
     qmlRegisterType<BarcodeScanner>(uri, v1, v2, "BarcodeScanner");
+    qmlRegisterType<OfdReceiptFetcher>(uri, v1, v2, "ReceiptFetcher");
     qmlRegisterType<Settings>(uri, v1, v2, "Settings");
     qmlRegisterSingletonType<HistoryModel>(uri, v1, v2, "HistoryModel", HistoryModel::createSingleton);
 }

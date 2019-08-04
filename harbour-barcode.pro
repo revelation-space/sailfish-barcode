@@ -5,7 +5,7 @@ TARGET = $${PREFIX}-$${NAME}
 CONFIG += sailfishapp link_pkgconfig
 PKGCONFIG += sailfishapp mlite5
 
-QT += multimedia concurrent sql
+QT += multimedia concurrent sql network
 
 LIBS += -ldl
 
@@ -31,6 +31,7 @@ SOURCES += \
     src/harbour-barcode.cpp \
     src/HistoryImageProvider.cpp \
     src/HistoryModel.cpp \
+    src/OfdReceiptFetcher.cpp \
     src/Settings.cpp \
     src/scanner/BarcodeScanner.cpp \
     src/scanner/Decoder.cpp \
@@ -41,6 +42,7 @@ HEADERS += \
     src/Database.h \
     src/HistoryImageProvider.h \
     src/HistoryModel.h \
+    src/OfdReceiptFetcher.h \
     src/Settings.h \
     src/scanner/BarcodeScanner.h \
     src/scanner/Decoder.h \

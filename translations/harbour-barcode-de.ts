@@ -66,7 +66,7 @@
     <message id="scan-status-busy">
         <source>Scan in progress ...</source>
         <extracomment>Scan status label</extracomment>
-        <translation>Scannen läuft ...</translation>
+        <translation>Scannen läuft…</translation>
     </message>
     <message id="scan-status-nothing_found">
         <source>No code detected! Try again.</source>
@@ -208,6 +208,36 @@
         <source>Contact card</source>
         <extracomment>Button text</extracomment>
         <translation>Kontaktkarte</translation>
+    </message>
+    <message id="text-fetch_receipt">
+        <source>Fetch receipt</source>
+        <extracomment>Button text</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="text-fetching_receipt">
+        <source>Fetching...</source>
+        <extracomment>Button text</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="text-cancel_fetching">
+        <source>Cancel</source>
+        <extracomment>Button label (cancel network operation)</extracomment>
+        <translation type="unfinished">Abbruch</translation>
+    </message>
+    <message id="text-fetch_contacting">
+        <source>Contacting %1...</source>
+        <extracomment>Progress label</extracomment>
+        <translation type="unfinished">Verbindung mit %1 wird hergestellt…</translation>
+    </message>
+    <message id="text-receipt_not_found">
+        <source>Receipt not found</source>
+        <extracomment>Status label</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="text-network_error">
+        <source>Network error</source>
+        <extracomment>Status label</extracomment>
+        <translation type="unfinished">Problem mit Netzwerk</translation>
     </message>
     <message id="contact-menu-save">
         <source>Save</source>
