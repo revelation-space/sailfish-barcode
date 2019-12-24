@@ -323,7 +323,7 @@
         <translation>Разрешить обратную ориентацию</translation>
     </message>
     <message id="settings-display-orientation-allow_inverted-description">
-        <source>If enabled, allows both primary and inverted landscape or portrait oprientations.</source>
+        <source>If enabled, allows both primary and inverted landscape or portrait orientation.</source>
         <extracomment>Text switch description</extracomment>
         <translation>Разрешает как основную, так и обратную портретную или альбомную ориентацию.</translation>
     </message>

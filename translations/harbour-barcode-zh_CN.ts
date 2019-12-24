@@ -319,7 +319,7 @@
         <translation>允许调整方向</translation>
     </message>
     <message id="settings-display-orientation-allow_inverted-description">
-        <source>If enabled, allows both primary and inverted landscape or portrait oprientations.</source>
+        <source>If enabled, allows both primary and inverted landscape or portrait orientation.</source>
         <extracomment>Text switch description</extracomment>
         <translation>如果启用，则允许在竖屏及横屏之间自由切换。</translation>
     </message>

@@ -321,7 +321,7 @@
         <translation>Permitir orientación invertida</translation>
     </message>
     <message id="settings-display-orientation-allow_inverted-description">
-        <source>If enabled, allows both primary and inverted landscape or portrait oprientations.</source>
+        <source>If enabled, allows both primary and inverted landscape or portrait orientation.</source>
         <extracomment>Text switch description</extracomment>
         <translation>Si está habilitado, permite oprientaciones primarias e invertidas de paisaje o retrato.</translation>
     </message>

@@ -319,7 +319,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message id="settings-display-orientation-allow_inverted-description">
-        <source>If enabled, allows both primary and inverted landscape or portrait oprientations.</source>
+        <source>If enabled, allows both primary and inverted landscape or portrait orientation.</source>
         <extracomment>Text switch description</extracomment>
         <translation type="unfinished"></translation>
     </message>

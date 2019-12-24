@@ -322,7 +322,7 @@
         <translation>Zezwól na odwróconą orientację</translation>
     </message>
     <message id="settings-display-orientation-allow_inverted-description">
-        <source>If enabled, allows both primary and inverted landscape or portrait oprientations.</source>
+        <source>If enabled, allows both primary and inverted landscape or portrait orientation.</source>
         <extracomment>Text switch description</extracomment>
         <translation>Jeśli ta opcja jest włączona, pozwala na wyświetlanie zarówno podstawowych, jak i odwróconych widoków poziomych lub pionowych.</translation>
     </message>

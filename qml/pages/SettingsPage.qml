@@ -164,7 +164,7 @@ Page {
                 //% "Allow inverted orientation"
                 text: qsTrId("settings-display-orientation-allow_inverted")
                 //: Text switch description
-                //% "If enabled, allows both primary and inverted landscape or portrait oprientations."
+                //% "If enabled, allows both primary and inverted landscape or portrait orientation."
                 description: qsTrId("settings-display-orientation-allow_inverted-description")
                 onClicked: settingsPage.applyOrientation()
             }
