@@ -166,10 +166,15 @@
         <extracomment>History page title</extracomment>
         <translation>Historia</translation>
     </message>
-    <message id="history-menu-delete_all">
-        <source>Delete all</source>
+    <message id="history-menu-clear">
+        <source>Clear</source>
         <extracomment>Pulley menu item</extracomment>
-        <translation>Usuń wszystko</translation>
+        <translation type="unfinished">Wyczyścić</translation>
+    </message>
+    <message id="history-menu-select">
+        <source>Select</source>
+        <extracomment>Pulley menu item</extracomment>
+        <translation type="unfinished">Wybierz</translation>
     </message>
     <message id="history-menu-delete">
         <source>Delete</source>
@@ -179,17 +184,37 @@
     <message id="history-menu-copy">
         <source>Copy to clipboard</source>
         <extracomment>Context menu item</extracomment>
-        <translation>Kopiuj do schowka</translation>
-    </message>
-    <message id="history-menu-delete_all_remorse">
-        <source>Deleting all</source>
-        <extracomment>Remorse popup text</extracomment>
-        <translation>Usuwanie wszystkiego</translation>
+        <translation>Kopiuj</translation>
     </message>
     <message id="history-menu-delete_remorse">
         <source>Deleting</source>
         <extracomment>Remorse popup text</extracomment>
         <translation>Usuwanie</translation>
+    </message>
+    <message id="history-remorse-deleting_all">
+        <source>Deleting all codes</source>
+        <extracomment>Remorse popup text</extracomment>
+        <translation type="unfinished">Usuwanie wszystkich kodów</translation>
+    </message>
+    <message id="history-remorse-deleting_selected_code">
+        <source>Deleting selected code</source>
+        <extracomment>Remorse popup text (single code selected)</extracomment>
+        <translation type="unfinished">Usuwanie wybranego kodu</translation>
+    </message>
+    <message id="history-remorse-deleting_selected_codes">
+        <source>Deleting selected codes</source>
+        <extracomment>Remorse popup text (multiple codes selected)</extracomment>
+        <translation type="unfinished">Usuwanie wybranych kodów</translation>
+    </message>
+    <message id="history-code_copied-notification">
+        <source>Selected code copied to clipboard</source>
+        <extracomment>Notification text (single code selected)</extracomment>
+        <translation type="unfinished">Wybrany kod skopiowany do schowka</translation>
+    </message>
+    <message id="history-codes_copied-notification">
+        <source>Selected codes copied to clipboard</source>
+        <extracomment>Notification text (multiple codes selected)</extracomment>
+        <translation type="unfinished">Wybrane kody skopiowane do schowka</translation>
     </message>
     <message id="history-empty">
         <source>History is empty</source>
@@ -325,6 +350,31 @@
         <source>If enabled, allows both primary and inverted landscape or portrait orientation.</source>
         <extracomment>Text switch description</extracomment>
         <translation>Jeśli ta opcja jest włączona, pozwala na wyświetlanie zarówno podstawowych, jak i odwróconych widoków poziomych lub pionowych.</translation>
+    </message>
+    <message id="select-title">
+        <source>Select codes</source>
+        <extracomment>Selection page title</extracomment>
+        <translation type="unfinished">Wybierz kody</translation>
+    </message>
+    <message id="select-menu-all">
+        <source>Select all</source>
+        <extracomment>Pulley menu item</extracomment>
+        <translation type="unfinished">Zaznacz wszystko</translation>
+    </message>
+    <message id="select-menu-none">
+        <source>Select none</source>
+        <extracomment>Pulley menu item</extracomment>
+        <translation type="unfinished">Wybierz żaden</translation>
+    </message>
+    <message id="hint-delete_selected_codes">
+        <source>Delete selected codes</source>
+        <extracomment>Hint label</extracomment>
+        <translation type="unfinished">Usuń wybrane kody</translation>
+    </message>
+    <message id="hint-copy_selected_codes">
+        <source>Copy selected codes to clipboard</source>
+        <extracomment>Hint label</extracomment>
+        <translation type="unfinished">Skopiuj wybrane kody do schowka</translation>
     </message>
 </context>
 </TS>

@@ -55,8 +55,10 @@ public:
     Q_INVOKABLE QVariantMap get(int row);
     Q_INVOKABLE QString getValue(int row);
     Q_INVOKABLE QString insert(QImage image, QString value, QString format);
+    Q_INVOKABLE QString concatenateCodes(QList<int> aRows, QChar aSeparator);
     Q_INVOKABLE void remove(int row);
     Q_INVOKABLE void removeAll();
+    Q_INVOKABLE void removeMany(QList<int> aRows);
     Q_INVOKABLE void commitChanges();
 
     // Utilities

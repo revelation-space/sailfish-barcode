@@ -116,7 +116,7 @@
     <message id="settings-history-slider_label">
         <source>Max history size (saved values: %1)</source>
         <extracomment>Slider label</extracomment>
-        <translation>Tamaño máx. historial (valores guardados: %1)</translation>
+        <translation>Tamaño máx. historial (guardados: %1)</translation>
     </message>
     <message id="settings-value-deactivated">
         <source>deactivated</source>
@@ -164,10 +164,15 @@
         <extracomment>History page title</extracomment>
         <translation>Historial</translation>
     </message>
-    <message id="history-menu-delete_all">
-        <source>Delete all</source>
+    <message id="history-menu-clear">
+        <source>Clear</source>
         <extracomment>Pulley menu item</extracomment>
-        <translation>Borrar todo</translation>
+        <translation type="unfinished">Borrar</translation>
+    </message>
+    <message id="history-menu-select">
+        <source>Select</source>
+        <extracomment>Pulley menu item</extracomment>
+        <translation type="unfinished">Seleccionar</translation>
     </message>
     <message id="history-menu-delete">
         <source>Delete</source>
@@ -177,17 +182,37 @@
     <message id="history-menu-copy">
         <source>Copy to clipboard</source>
         <extracomment>Context menu item</extracomment>
-        <translation>Copiar a portapapeles</translation>
-    </message>
-    <message id="history-menu-delete_all_remorse">
-        <source>Deleting all</source>
-        <extracomment>Remorse popup text</extracomment>
-        <translation>Borrando todo</translation>
+        <translation>Copiar</translation>
     </message>
     <message id="history-menu-delete_remorse">
         <source>Deleting</source>
         <extracomment>Remorse popup text</extracomment>
         <translation>Borrando</translation>
+    </message>
+    <message id="history-remorse-deleting_all">
+        <source>Deleting all codes</source>
+        <extracomment>Remorse popup text</extracomment>
+        <translation type="unfinished">Borrando todos los códigos</translation>
+    </message>
+    <message id="history-remorse-deleting_selected_code">
+        <source>Deleting selected code</source>
+        <extracomment>Remorse popup text (single code selected)</extracomment>
+        <translation type="unfinished">Borrando el código seleccionado</translation>
+    </message>
+    <message id="history-remorse-deleting_selected_codes">
+        <source>Deleting selected codes</source>
+        <extracomment>Remorse popup text (multiple codes selected)</extracomment>
+        <translation type="unfinished">Borrando códigos seleccionados</translation>
+    </message>
+    <message id="history-code_copied-notification">
+        <source>Selected code copied to clipboard</source>
+        <extracomment>Notification text (single code selected)</extracomment>
+        <translation type="unfinished">Código seleccionado copiado al portapapeles</translation>
+    </message>
+    <message id="history-codes_copied-notification">
+        <source>Selected codes copied to clipboard</source>
+        <extracomment>Notification text (multiple codes selected)</extracomment>
+        <translation type="unfinished">Códigos seleccionados copiados al portapapeles</translation>
     </message>
     <message id="history-empty">
         <source>History is empty</source>
@@ -281,7 +306,6 @@
     </message>
     <message id="hint-open_link">
         <source>Open link in browser</source>
-        <oldsource>Open link</oldsource>
         <extracomment>Hint label</extracomment>
         <translation>Abrir enlace en navegador</translation>
     </message>
@@ -324,6 +348,31 @@
         <source>If enabled, allows both primary and inverted landscape or portrait orientation.</source>
         <extracomment>Text switch description</extracomment>
         <translation>Si está habilitado, permite oprientaciones primarias e invertidas de paisaje o retrato.</translation>
+    </message>
+    <message id="select-title">
+        <source>Select codes</source>
+        <extracomment>Selection page title</extracomment>
+        <translation type="unfinished">Seleccionar códigos</translation>
+    </message>
+    <message id="select-menu-all">
+        <source>Select all</source>
+        <extracomment>Pulley menu item</extracomment>
+        <translation type="unfinished">Seleccionar todo</translation>
+    </message>
+    <message id="select-menu-none">
+        <source>Select none</source>
+        <extracomment>Pulley menu item</extracomment>
+        <translation type="unfinished">Seleccionar ninguno</translation>
+    </message>
+    <message id="hint-delete_selected_codes">
+        <source>Delete selected codes</source>
+        <extracomment>Hint label</extracomment>
+        <translation type="unfinished">Eliminar códigos seleccionados</translation>
+    </message>
+    <message id="hint-copy_selected_codes">
+        <source>Copy selected codes to clipboard</source>
+        <extracomment>Hint label</extracomment>
+        <translation type="unfinished">Copiar códigos seleccionados al portapapeles</translation>
     </message>
 </context>
 </TS>

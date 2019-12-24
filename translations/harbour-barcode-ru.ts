@@ -166,10 +166,15 @@
         <extracomment>History page title</extracomment>
         <translation>История</translation>
     </message>
-    <message id="history-menu-delete_all">
-        <source>Delete all</source>
+    <message id="history-menu-clear">
+        <source>Clear</source>
         <extracomment>Pulley menu item</extracomment>
-        <translation>Удалить все</translation>
+        <translation>Очистить</translation>
+    </message>
+    <message id="history-menu-select">
+        <source>Select</source>
+        <extracomment>Pulley menu item</extracomment>
+        <translation>Выбрать</translation>
     </message>
     <message id="history-menu-delete">
         <source>Delete</source>
@@ -179,22 +184,42 @@
     <message id="history-menu-copy">
         <source>Copy to clipboard</source>
         <extracomment>Context menu item</extracomment>
-        <translation>Скопировать в буфер обмена</translation>
-    </message>
-    <message id="history-menu-delete_all_remorse">
-        <source>Deleting all</source>
-        <extracomment>Remorse popup text</extracomment>
-        <translation>Удаление всех записей</translation>
+        <translation>Скопировать</translation>
     </message>
     <message id="history-menu-delete_remorse">
         <source>Deleting</source>
         <extracomment>Remorse popup text</extracomment>
         <translation>Удаление</translation>
     </message>
+    <message id="history-remorse-deleting_all">
+        <source>Deleting all codes</source>
+        <extracomment>Remorse popup text</extracomment>
+        <translation>Все коды будут удалены</translation>
+    </message>
+    <message id="history-remorse-deleting_selected_code">
+        <source>Deleting selected code</source>
+        <extracomment>Remorse popup text (single code selected)</extracomment>
+        <translation>Выбранный код будет удалён</translation>
+    </message>
+    <message id="history-remorse-deleting_selected_codes">
+        <source>Deleting selected codes</source>
+        <extracomment>Remorse popup text (multiple codes selected)</extracomment>
+        <translation>Выбранные коды будут удалены</translation>
+    </message>
+    <message id="history-code_copied-notification">
+        <source>Selected code copied to clipboard</source>
+        <extracomment>Notification text (single code selected)</extracomment>
+        <translation>Выбранный код скопирован в буфер обмена</translation>
+    </message>
+    <message id="history-codes_copied-notification">
+        <source>Selected codes copied to clipboard</source>
+        <extracomment>Notification text (multiple codes selected)</extracomment>
+        <translation>Выбранные коды скопированы в буфер обмена</translation>
+    </message>
     <message id="history-empty">
         <source>History is empty</source>
         <extracomment>Placeholder text</extracomment>
-        <translation>Тут пока пусто</translation>
+        <translation>Тут ничего нет</translation>
     </message>
     <message id="text-header">
         <source>Decoded text</source>
@@ -283,7 +308,6 @@
     </message>
     <message id="hint-open_link">
         <source>Open link in browser</source>
-        <oldsource>Open link</oldsource>
         <extracomment>Hint label</extracomment>
         <translation>Открыть ссылку в браузере</translation>
     </message>
@@ -326,6 +350,31 @@
         <source>If enabled, allows both primary and inverted landscape or portrait orientation.</source>
         <extracomment>Text switch description</extracomment>
         <translation>Разрешает как основную, так и обратную портретную или альбомную ориентацию.</translation>
+    </message>
+    <message id="select-title">
+        <source>Select codes</source>
+        <extracomment>Selection page title</extracomment>
+        <translation>Выбрать коды</translation>
+    </message>
+    <message id="select-menu-all">
+        <source>Select all</source>
+        <extracomment>Pulley menu item</extracomment>
+        <translation>Выбрать все</translation>
+    </message>
+    <message id="select-menu-none">
+        <source>Select none</source>
+        <extracomment>Pulley menu item</extracomment>
+        <translation>Отменить выбор</translation>
+    </message>
+    <message id="hint-delete_selected_codes">
+        <source>Delete selected codes</source>
+        <extracomment>Hint label</extracomment>
+        <translation>Удалить выбранные коды</translation>
+    </message>
+    <message id="hint-copy_selected_codes">
+        <source>Copy selected codes to clipboard</source>
+        <extracomment>Hint label</extracomment>
+        <translation>Скопировать выделенные коды в буфер обмена</translation>
     </message>
 </context>
 </TS>

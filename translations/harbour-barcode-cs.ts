@@ -101,7 +101,7 @@
     <message id="settings-save_images-description">
         <source>This will delete all previously saved barcode images.</source>
         <extracomment>Switch button description (explanation)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tím vymažete všechny dříve uložené obrázky čárových kódů.</translation>
     </message>
     <message id="settings-save_images-confirm_delete">
         <source>Confirm delete</source>
@@ -116,7 +116,7 @@
     <message id="settings-history-slider_label">
         <source>Max history size (saved values: %1)</source>
         <extracomment>Slider label</extracomment>
-        <translation>Maximální velikost historie (počet uložených hodnot: %1)</translation>
+        <translation>Maximální velikost historie (uloženo %1)</translation>
     </message>
     <message id="settings-value-deactivated">
         <source>deactivated</source>
@@ -127,15 +127,15 @@
         <source>%1 item(s)</source>
         <extracomment>History slider value</extracomment>
         <translation type="unfinished">
+            <numerusform>%1 položka</numerusform>
+            <numerusform>%1 položky</numerusform>
             <numerusform>%1 položek</numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
     <message id="settings-history-confirm_resize">
         <source>Confirm resize</source>
         <extracomment>Button label</extracomment>
-        <translation>Potvrdit změnu velikosti</translation>
+        <translation type="unfinished">Potvrdit</translation>
     </message>
     <message id="settings-history-cancel">
         <source>Cancel</source>
@@ -166,10 +166,15 @@
         <extracomment>History page title</extracomment>
         <translation>Historie</translation>
     </message>
-    <message id="history-menu-delete_all">
-        <source>Delete all</source>
+    <message id="history-menu-clear">
+        <source>Clear</source>
         <extracomment>Pulley menu item</extracomment>
-        <translation>Smazat vše</translation>
+        <translation type="unfinished">Vyčistit</translation>
+    </message>
+    <message id="history-menu-select">
+        <source>Select</source>
+        <extracomment>Pulley menu item</extracomment>
+        <translation type="unfinished">Vybrat</translation>
     </message>
     <message id="history-menu-delete">
         <source>Delete</source>
@@ -179,17 +184,37 @@
     <message id="history-menu-copy">
         <source>Copy to clipboard</source>
         <extracomment>Context menu item</extracomment>
-        <translation>Kopírovat do schránky</translation>
-    </message>
-    <message id="history-menu-delete_all_remorse">
-        <source>Deleting all</source>
-        <extracomment>Remorse popup text</extracomment>
-        <translation>Maže se vše</translation>
+        <translation type="unfinished">Kopírovat</translation>
     </message>
     <message id="history-menu-delete_remorse">
         <source>Deleting</source>
         <extracomment>Remorse popup text</extracomment>
         <translation>Mazání</translation>
+    </message>
+    <message id="history-remorse-deleting_all">
+        <source>Deleting all codes</source>
+        <extracomment>Remorse popup text</extracomment>
+        <translation type="unfinished">Maže se vše</translation>
+    </message>
+    <message id="history-remorse-deleting_selected_code">
+        <source>Deleting selected code</source>
+        <extracomment>Remorse popup text (single code selected)</extracomment>
+        <translation type="unfinished">Mazání vybraného kódu</translation>
+    </message>
+    <message id="history-remorse-deleting_selected_codes">
+        <source>Deleting selected codes</source>
+        <extracomment>Remorse popup text (multiple codes selected)</extracomment>
+        <translation type="unfinished">Mazání vybraných kódů</translation>
+    </message>
+    <message id="history-code_copied-notification">
+        <source>Selected code copied to clipboard</source>
+        <extracomment>Notification text (single code selected)</extracomment>
+        <translation type="unfinished">Vybraný kód zkopírován do schránky</translation>
+    </message>
+    <message id="history-codes_copied-notification">
+        <source>Selected codes copied to clipboard</source>
+        <extracomment>Notification text (multiple codes selected)</extracomment>
+        <translation type="unfinished">Vybrané kódy zkopírovány do schránky</translation>
     </message>
     <message id="history-empty">
         <source>History is empty</source>
@@ -289,7 +314,7 @@
     <message id="settings-display-section">
         <source>Display</source>
         <extracomment>Section header</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Displej</translation>
     </message>
     <message id="settings-display-orientation-label">
         <source>Orientation</source>
@@ -319,12 +344,37 @@
     <message id="settings-display-orientation-allow_inverted">
         <source>Allow inverted orientation</source>
         <extracomment>Text switch label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Povolit obrácenou orientaci</translation>
     </message>
     <message id="settings-display-orientation-allow_inverted-description">
         <source>If enabled, allows both primary and inverted landscape or portrait orientation.</source>
         <extracomment>Text switch description</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pokud je povolena, umožňuje jak primární, tak invertovanou orientaci na šířku nebo na výšku.</translation>
+    </message>
+    <message id="select-title">
+        <source>Select codes</source>
+        <extracomment>Selection page title</extracomment>
+        <translation type="unfinished">Vyberte kódy</translation>
+    </message>
+    <message id="select-menu-all">
+        <source>Select all</source>
+        <extracomment>Pulley menu item</extracomment>
+        <translation type="unfinished">Vybrat vše</translation>
+    </message>
+    <message id="select-menu-none">
+        <source>Select none</source>
+        <extracomment>Pulley menu item</extracomment>
+        <translation type="unfinished">Zrušit výběr</translation>
+    </message>
+    <message id="hint-delete_selected_codes">
+        <source>Delete selected codes</source>
+        <extracomment>Hint label</extracomment>
+        <translation type="unfinished">Odstranit vybrané kódy</translation>
+    </message>
+    <message id="hint-copy_selected_codes">
+        <source>Copy selected codes to clipboard</source>
+        <extracomment>Hint label</extracomment>
+        <translation type="unfinished">Zkopírujte vybrané kódy do schránky</translation>
     </message>
 </context>
 </TS>

@@ -25,6 +25,7 @@ THE SOFTWARE.
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import org.nemomobile.notifications 1.0
 import harbour.barcode 1.0
 
 import "../js/Utils.js" as Utils
@@ -37,7 +38,7 @@ Page {
 
     property int myStackDepth
 
-    readonly property bool empty: historyList.model.count === 0
+    readonly property bool empty: HistoryModel.count === 0
 
     onStatusChanged: {
         if (status === PageStatus.Active) {
@@ -46,7 +47,18 @@ Page {
             // We also end up here after TextPage gets pushed
             if (pageStack.depth < myStackDepth) {
                 // It's us getting popped
-                historyList.model.commitChanges()
+                HistoryModel.commitChanges()
+            }
+        }
+    }
+
+    Notification {
+        id: clipboardNotification
+
+        expireTimeout: 2000
+        Component.onCompleted: {
+            if ("icon" in clipboardNotification) {
+                clipboardNotification.icon = "icon-s-clipboard"
             }
         }
     }
@@ -77,14 +89,20 @@ Page {
             }
         }
 
-        model: HistoryModel
+        model: HarbourSelectionListModel { sourceModel: HistoryModel }
 
-        delegate: ListItem {
+        delegate: HistoryItem {
             id: delegate
+
+            value: model.value
+            timestamp: model.timestamp
+            format: model.format
+            enabled: !model.selected || !remorsePopup.visible
+            opacity: enabled ? 1 : HarbourTheme.opacityFaint
+
             readonly property int modelIndex: index
 
             function deleteItem() {
-                var model = historyList.model
                 var item = delegate
                 var remorse = remorseComponent.createObject(null)
                 remorse.z = delegate.z + 1
@@ -92,13 +110,13 @@ Page {
                 //% "Deleting"
                 remorse.execute(delegate, qsTrId("history-menu-delete_remorse"),
                     function() {
-                        model.remove(item.modelIndex)
+                        HistoryModel.remove(item.modelIndex)
                         remorse.destroy()
                     })
             }
 
             onClicked: {
-                var historyItem = historyList.model.get(index)
+                var historyItem = HistoryModel.get(index)
                 var item = delegate
                 var stack = pageStack
                 stack.push("TextPage.qml", {
@@ -106,7 +124,7 @@ Page {
                     recordId: historyItem.id,
                     text: historyItem.value,
                     format: Utils.barcodeFormat(historyItem.format),
-                    timestamp: historyList.model.formatTimestamp(historyItem.timestamp),
+                    timestamp: HistoryModel.formatTimestamp(historyItem.timestamp),
                     canDelete: true
                 }).deleteEntry.connect(function() {
                     stack.pop()
@@ -115,44 +133,6 @@ Page {
             }
 
             ListView.onRemove: RemoveAnimation { target: delegate }
-
-            Column {
-                width: parent.width
-                anchors.verticalCenter: parent.verticalCenter
-                Label {
-                    x: Theme.horizontalPageMargin
-                    width: parent.width - (2 * Theme.horizontalPageMargin)
-                    color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
-                    font.pixelSize: Theme.fontSizeSmall
-                    truncationMode: TruncationMode.Fade
-                    text: Utils.getValueText(model.value)
-                }
-                Item {
-                    width: parent.width
-                    height: Math.max(timestampLabel.height, formatLabel.height)
-                    Label {
-                        id: timestampLabel
-                        anchors {
-                            left: parent.left
-                            margins: Theme.horizontalPageMargin
-                        }
-                        color: delegate.highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor
-                        font.pixelSize: Theme.fontSizeExtraSmall
-                        text: historyList.model.formatTimestamp(model.timestamp)
-                    }
-                    Label {
-                        id: formatLabel
-                        anchors {
-                            right: parent.right
-                            margins: Theme.horizontalPageMargin
-                            verticalCenter: parent.verticalCenter
-                        }
-                        color: Theme.highlightColor
-                        font.pixelSize: Theme.fontSizeExtraSmall
-                        text: Utils.barcodeFormat(model.format)
-                    }
-                }
-            }
 
             menu: Component {
                 ContextMenu {
@@ -168,30 +148,69 @@ Page {
                         //: Context menu item
                         //% "Copy to clipboard"
                         text: qsTrId("history-menu-copy")
-                        onClicked: Clipboard.text = historyList.model.getValue(delegate.modelIndex)
+                        onClicked: Clipboard.text = HistoryModel.getValue(delegate.modelIndex)
                     }
                 }
             }
-
         }
 
         PullDownMenu {
             visible: !historyPage.empty
             MenuItem {
                 //: Pulley menu item
-                //% "Delete all"
-                text: qsTrId("history-menu-delete_all")
+                //% "Clear"
+                text: qsTrId("history-menu-clear")
                 onClicked: {
                     //: Remorse popup text
-                    //% "Deleting all"
-                    remorsePopup.execute(qsTrId("history-menu-delete_all_remorse"),
-                        function() { historyList.model.removeAll() })
+                    //% "Deleting all codes"
+                    remorsePopup.execute(qsTrId("history-remorse-deleting_all"),
+                        function() { HistoryModel.removeAll() })
+                }
+            }
+            MenuItem {
+                //: Pulley menu item
+                //% "Select"
+                text: qsTrId("history-menu-select")
+                onClicked: {
+                    historyList.model.clearSelection()
+                    var page = pageStack.push("SelectPage.qml", { model: historyList.model })
+                    page.copySelected.connect(function() {
+                        pageStack.pop()
+                        var n = historyList.model.selectionCount
+                        if (n > 0) {
+                            Clipboard.text = HistoryModel.concatenateCodes(historyList.model.selectedRows, '\n')
+                            clipboardNotification.previewBody = (n === 1) ?
+                                //: Notification text (single code selected)
+                                //% "Selected code copied to clipboard"
+                                qsTrId("history-code_copied-notification") :
+                                //: Notification text (multiple codes selected)
+                                //% "Selected codes copied to clipboard"
+                                qsTrId("history-codes_copied-notification")
+                            clipboardNotification.publish()
+                        }
+                    })
+                    page.deleteSelected.connect(function() {
+                        pageStack.pop()
+                        var n = historyList.model.selectionCount
+                        if (n > 0) {
+                            remorsePopup.execute((n === 1) ?
+                                //: Remorse popup text (single code selected)
+                                //% "Deleting selected code"
+                                qsTrId("history-remorse-deleting_selected_code") :
+                                //: Remorse popup text (multiple codes selected)
+                                //% "Deleting selected codes"
+                                qsTrId("history-remorse-deleting_selected_codes"), function() {
+                                HistoryModel.removeMany(historyList.model.selectedRows)
+                            })
+                        }
+                    })
                 }
             }
         }
 
         Component {
             id: remorseComponent
+
             RemorseItem { }
         }
 
@@ -203,6 +222,7 @@ Page {
 
         ViewPlaceholder {
             id: placeHolder
+
             enabled: historyPage.empty
             //: Placeholder text
             //% "History is empty"

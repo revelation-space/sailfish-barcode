@@ -91,22 +91,22 @@
     <message id="settings-autoscan-label">
         <source>Scan on start</source>
         <extracomment>Switch button text</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Scansione all&apos;avvio</translation>
     </message>
     <message id="settings-save_images-label">
         <source>Save barcode images</source>
         <extracomment>Switch button text</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Salva immagini di codici a barre</translation>
     </message>
     <message id="settings-save_images-description">
         <source>This will delete all previously saved barcode images.</source>
         <extracomment>Switch button description (explanation)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tutte le immagini di codici a barre salvate in precedenza verranno eliminate.</translation>
     </message>
     <message id="settings-save_images-confirm_delete">
         <source>Confirm delete</source>
         <extracomment>Button label (confirm deletion of image files)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Conferma cancellazione</translation>
     </message>
     <message id="settings-history-section">
         <source>History</source>
@@ -116,25 +116,25 @@
     <message id="settings-history-slider_label">
         <source>Max history size (saved values: %1)</source>
         <extracomment>Slider label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dimensione cronologia massima (salvata: %1)</translation>
     </message>
     <message id="settings-value-deactivated">
         <source>deactivated</source>
         <extracomment>Generic slider value</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">disattivato</translation>
     </message>
     <message id="settings-history-slider_value" numerus="yes">
         <source>%1 item(s)</source>
         <extracomment>History slider value</extracomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%1 elemento</numerusform>
+            <numerusform>%1 elementi</numerusform>
         </translation>
     </message>
     <message id="settings-history-confirm_resize">
         <source>Confirm resize</source>
         <extracomment>Button label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Confermare</translation>
     </message>
     <message id="settings-history-cancel">
         <source>Cancel</source>
@@ -149,7 +149,7 @@
     <message id="settings-marker-slider_label">
         <source>Mark detected code</source>
         <extracomment>Slider label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Contrassegna il codice rilevato</translation>
     </message>
     <message id="settings-marker-slider_value" numerus="yes">
         <source>%1 second(s)</source>
@@ -164,10 +164,15 @@
         <extracomment>History page title</extracomment>
         <translation type="unfinished">Cronologia</translation>
     </message>
-    <message id="history-menu-delete_all">
-        <source>Delete all</source>
+    <message id="history-menu-clear">
+        <source>Clear</source>
         <extracomment>Pulley menu item</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pulisci</translation>
+    </message>
+    <message id="history-menu-select">
+        <source>Select</source>
+        <extracomment>Pulley menu item</extracomment>
+        <translation type="unfinished">Seleziona</translation>
     </message>
     <message id="history-menu-delete">
         <source>Delete</source>
@@ -177,17 +182,37 @@
     <message id="history-menu-copy">
         <source>Copy to clipboard</source>
         <extracomment>Context menu item</extracomment>
-        <translation>Copia negli appunti</translation>
-    </message>
-    <message id="history-menu-delete_all_remorse">
-        <source>Deleting all</source>
-        <extracomment>Remorse popup text</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Copia</translation>
     </message>
     <message id="history-menu-delete_remorse">
         <source>Deleting</source>
         <extracomment>Remorse popup text</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Eliminazione</translation>
+    </message>
+    <message id="history-remorse-deleting_all">
+        <source>Deleting all codes</source>
+        <extracomment>Remorse popup text</extracomment>
+        <translation type="unfinished">Eliminazione di tutti i codici</translation>
+    </message>
+    <message id="history-remorse-deleting_selected_code">
+        <source>Deleting selected code</source>
+        <extracomment>Remorse popup text (single code selected)</extracomment>
+        <translation type="unfinished">Eliminazione del codice selezionato</translation>
+    </message>
+    <message id="history-remorse-deleting_selected_codes">
+        <source>Deleting selected codes</source>
+        <extracomment>Remorse popup text (multiple codes selected)</extracomment>
+        <translation type="unfinished">Eliminazione dei codici selezionati</translation>
+    </message>
+    <message id="history-code_copied-notification">
+        <source>Selected code copied to clipboard</source>
+        <extracomment>Notification text (single code selected)</extracomment>
+        <translation type="unfinished">Codice selezionato copiato negli appunti</translation>
+    </message>
+    <message id="history-codes_copied-notification">
+        <source>Selected codes copied to clipboard</source>
+        <extracomment>Notification text (multiple codes selected)</extracomment>
+        <translation type="unfinished">Codici selezionati copiati negli appunti</translation>
     </message>
     <message id="history-empty">
         <source>History is empty</source>
@@ -281,7 +306,6 @@
     </message>
     <message id="hint-open_link">
         <source>Open link in browser</source>
-        <oldsource>Open link</oldsource>
         <extracomment>Hint label</extracomment>
         <translation type="unfinished">Apri link nel browser</translation>
     </message>
@@ -318,12 +342,37 @@
     <message id="settings-display-orientation-allow_inverted">
         <source>Allow inverted orientation</source>
         <extracomment>Text switch label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Consenti orientamento invertito</translation>
     </message>
     <message id="settings-display-orientation-allow_inverted-description">
         <source>If enabled, allows both primary and inverted landscape or portrait orientation.</source>
         <extracomment>Text switch description</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="select-title">
+        <source>Select codes</source>
+        <extracomment>Selection page title</extracomment>
+        <translation type="unfinished">Seleziona i codici</translation>
+    </message>
+    <message id="select-menu-all">
+        <source>Select all</source>
+        <extracomment>Pulley menu item</extracomment>
+        <translation type="unfinished">Seleziona tutto</translation>
+    </message>
+    <message id="select-menu-none">
+        <source>Select none</source>
+        <extracomment>Pulley menu item</extracomment>
+        <translation type="unfinished">Seleziona nessuno</translation>
+    </message>
+    <message id="hint-delete_selected_codes">
+        <source>Delete selected codes</source>
+        <extracomment>Hint label</extracomment>
+        <translation type="unfinished">Elimina i codici selezionati</translation>
+    </message>
+    <message id="hint-copy_selected_codes">
+        <source>Copy selected codes to clipboard</source>
+        <extracomment>Hint label</extracomment>
+        <translation type="unfinished">Copia i codici selezionati negli appunti</translation>
     </message>
 </context>
 </TS>

@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "HarbourDebug.h"
 #include "HarbourDisplayBlanking.h"
 #include "HarbourImageProvider.h"
+#include "HarbourSelectionListModel.h"
 #include "HarbourSingleImageProvider.h"
 #include "HarbourTemporaryFile.h"
 #include "HarbourTheme.h"
@@ -57,6 +58,7 @@ THE SOFTWARE.
 static void register_types(QQmlEngine* engine, const char* uri, int v1, int v2)
 {
     ContactsPlugin::registerTypes(engine, uri, v1, v2);
+    qmlRegisterType<HarbourSelectionListModel>(uri, v1, v2, "HarbourSelectionListModel");
     qmlRegisterType<HarbourSingleImageProvider>(uri, v1, v2, "SingleImageProvider");
     qmlRegisterType<HarbourDisplayBlanking>(uri, v1, v2, "DisplayBlanking");
     qmlRegisterType<HarbourTemporaryFile>(uri, v1, v2, "TemporaryFile");

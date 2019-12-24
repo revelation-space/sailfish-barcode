@@ -71,7 +71,7 @@
     <message id="scan-status-nothing_found">
         <source>No code detected! Try again.</source>
         <extracomment>Scan status label</extracomment>
-        <translation>Aucun code-barre détecté ! Veuillez réessayer.</translation>
+        <translation>Aucun code-barre détecté! Veuillez réessayer.</translation>
     </message>
     <message id="settings-title">
         <source>Settings</source>
@@ -96,17 +96,17 @@
     <message id="settings-save_images-label">
         <source>Save barcode images</source>
         <extracomment>Switch button text</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Enregistrer des images de codes-barres</translation>
     </message>
     <message id="settings-save_images-description">
         <source>This will delete all previously saved barcode images.</source>
         <extracomment>Switch button description (explanation)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Toutes les images de codes-barres précédemment enregistrées seront supprimées.</translation>
     </message>
     <message id="settings-save_images-confirm_delete">
         <source>Confirm delete</source>
         <extracomment>Button label (confirm deletion of image files)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Confirmation de la suppression</translation>
     </message>
     <message id="settings-history-section">
         <source>History</source>
@@ -116,7 +116,7 @@
     <message id="settings-history-slider_label">
         <source>Max history size (saved values: %1)</source>
         <extracomment>Slider label</extracomment>
-        <translation>Taille maximale de l&apos;historique (%1 éléments sauvegardés)</translation>
+        <translation>Taille maximale de l&apos;historique (sauvegardés: %1)</translation>
     </message>
     <message id="settings-value-deactivated">
         <source>deactivated</source>
@@ -127,14 +127,14 @@
         <source>%1 item(s)</source>
         <extracomment>History slider value</extracomment>
         <translation type="unfinished">
-            <numerusform>%1 élément(s)</numerusform>
-            <numerusform></numerusform>
+            <numerusform>%1 élément</numerusform>
+            <numerusform>%1 éléments</numerusform>
         </translation>
     </message>
     <message id="settings-history-confirm_resize">
         <source>Confirm resize</source>
         <extracomment>Button label</extracomment>
-        <translation>Confirmer le redimensionnement</translation>
+        <translation>Confirmer</translation>
     </message>
     <message id="settings-history-cancel">
         <source>Cancel</source>
@@ -164,10 +164,15 @@
         <extracomment>History page title</extracomment>
         <translation>Historique</translation>
     </message>
-    <message id="history-menu-delete_all">
-        <source>Delete all</source>
+    <message id="history-menu-clear">
+        <source>Clear</source>
         <extracomment>Pulley menu item</extracomment>
-        <translation>Tout supprimer</translation>
+        <translation type="unfinished">Effacer</translation>
+    </message>
+    <message id="history-menu-select">
+        <source>Select</source>
+        <extracomment>Pulley menu item</extracomment>
+        <translation type="unfinished">Sélectionner</translation>
     </message>
     <message id="history-menu-delete">
         <source>Delete</source>
@@ -177,17 +182,37 @@
     <message id="history-menu-copy">
         <source>Copy to clipboard</source>
         <extracomment>Context menu item</extracomment>
-        <translation>Copier dans le presse-papier</translation>
-    </message>
-    <message id="history-menu-delete_all_remorse">
-        <source>Deleting all</source>
-        <extracomment>Remorse popup text</extracomment>
-        <translation>Supression intégrale</translation>
+        <translation>Copier</translation>
     </message>
     <message id="history-menu-delete_remorse">
         <source>Deleting</source>
         <extracomment>Remorse popup text</extracomment>
         <translation>Suppression</translation>
+    </message>
+    <message id="history-remorse-deleting_all">
+        <source>Deleting all codes</source>
+        <extracomment>Remorse popup text</extracomment>
+        <translation type="unfinished">Suppression de tous les codes</translation>
+    </message>
+    <message id="history-remorse-deleting_selected_code">
+        <source>Deleting selected code</source>
+        <extracomment>Remorse popup text (single code selected)</extracomment>
+        <translation type="unfinished">Suppression du code sélectionné</translation>
+    </message>
+    <message id="history-remorse-deleting_selected_codes">
+        <source>Deleting selected codes</source>
+        <extracomment>Remorse popup text (multiple codes selected)</extracomment>
+        <translation type="unfinished">Suppression des codes sélectionnés</translation>
+    </message>
+    <message id="history-code_copied-notification">
+        <source>Selected code copied to clipboard</source>
+        <extracomment>Notification text (single code selected)</extracomment>
+        <translation type="unfinished">Code sélectionné copié dans le presse-papiers</translation>
+    </message>
+    <message id="history-codes_copied-notification">
+        <source>Selected codes copied to clipboard</source>
+        <extracomment>Notification text (multiple codes selected)</extracomment>
+        <translation type="unfinished">Codes sélectionnés copiés dans le presse-papiers</translation>
     </message>
     <message id="history-empty">
         <source>History is empty</source>
@@ -281,7 +306,6 @@
     </message>
     <message id="hint-open_link">
         <source>Open link in browser</source>
-        <oldsource>Open link</oldsource>
         <extracomment>Hint label</extracomment>
         <translation type="unfinished">Ouvrir le lien dans le navigateur</translation>
     </message>
@@ -318,12 +342,37 @@
     <message id="settings-display-orientation-allow_inverted">
         <source>Allow inverted orientation</source>
         <extracomment>Text switch label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Autoriser l&apos;orientation inversée</translation>
     </message>
     <message id="settings-display-orientation-allow_inverted-description">
         <source>If enabled, allows both primary and inverted landscape or portrait orientation.</source>
         <extracomment>Text switch description</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="select-title">
+        <source>Select codes</source>
+        <extracomment>Selection page title</extracomment>
+        <translation type="unfinished">Sélectionnez les codes</translation>
+    </message>
+    <message id="select-menu-all">
+        <source>Select all</source>
+        <extracomment>Pulley menu item</extracomment>
+        <translation type="unfinished">Sélectionner tout</translation>
+    </message>
+    <message id="select-menu-none">
+        <source>Select none</source>
+        <extracomment>Pulley menu item</extracomment>
+        <translation type="unfinished">Ne rien sélectionner</translation>
+    </message>
+    <message id="hint-delete_selected_codes">
+        <source>Delete selected codes</source>
+        <extracomment>Hint label</extracomment>
+        <translation type="unfinished">Supprimer les codes sélectionnés</translation>
+    </message>
+    <message id="hint-copy_selected_codes">
+        <source>Copy selected codes to clipboard</source>
+        <extracomment>Hint label</extracomment>
+        <translation type="unfinished">Copiez les codes sélectionnés dans le presse-papiers</translation>
     </message>
 </context>
 </TS>

@@ -538,6 +538,21 @@ QString HistoryModel::insert(QImage aImage, QString aText, QString aFormat)
     return id;
 }
 
+QString HistoryModel::concatenateCodes(QList<int> aRows, QChar aSeparator)
+{
+    QString text;
+    const int n = aRows.count();
+    for (int i = 0; i < n; i++) {
+        const QString value(getValue(aRows.at(i)));
+        if (!value.isEmpty()) {
+            if (!text.isEmpty()) text += aSeparator;
+            text += value;
+        }
+    }
+    HDEBUG(text);
+    return text;
+}
+
 void HistoryModel::remove(int aRow)
 {
     HDEBUG(aRow << iPrivate->valueAt(aRow, Private::FIELD_ID).toString());
@@ -551,6 +566,36 @@ void HistoryModel::removeAll()
     const int n = rowCount();
     if (n > 0) {
         removeRows(0, n);
+        invalidateFilter();
+    }
+}
+
+void HistoryModel::removeMany(QList<int> aRows)
+{
+    qSort(aRows);
+    HDEBUG(aRows);
+    int start = -1, end = -1, removed = 0;
+    for (int i = aRows.count() - 1; i >= 0; i--) {
+        const int row = aRows.at(i);
+        if (start < 0) {
+            start = end = row;
+        } else if (row == start - 1) {
+            start = row;
+        } else {
+            const int n = end - start + 1;
+            HDEBUG("Removing" << n << "row(s)" << start << ".." << end);
+            removeRows(start, n);
+            removed += n;
+            start = end = row;
+        }
+    }
+    if (start >= 0) {
+        const int n = end - start + 1;
+        HDEBUG("Removing" << n << "row(s)" << start << ".." << end);
+        removeRows(start, n);
+        removed += n;
+    }
+    if (removed > 0) {
         invalidateFilter();
     }
 }
