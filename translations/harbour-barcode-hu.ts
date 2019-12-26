@@ -217,11 +217,6 @@
         <extracomment>Placeholder text</extracomment>
         <translation>Nincsenek előzmények</translation>
     </message>
-    <message id="text-header">
-        <source>Decoded text</source>
-        <extracomment>Page header</extracomment>
-        <translation>Beolvasott szöveg</translation>
-    </message>
     <message id="text-open_link">
         <source>Open link</source>
         <extracomment>Button text</extracomment>

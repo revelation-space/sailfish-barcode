@@ -36,10 +36,10 @@ Page {
 
     property string text
     property string recordId
-    property string timestamp
     property bool hasImage
     property bool canDelete
-    property alias format: textArea.label
+    property alias format: pageHeader.title
+    property alias timestamp: pageHeader.description
     readonly property string normalizedText: Utils.convertLineBreaks(text)
     readonly property bool isVCard: Utils.isVcard(normalizedText)
     readonly property bool haveContact: vcard ? (vcard.count > 0) : false
@@ -97,9 +97,7 @@ Page {
             width: parent.width - 2 * x
             height: childrenRect.height
 
-            //: Page header
-            //% "Decoded text"
-            PageHeader { title: qsTrId("text-header") }
+            PageHeader { id: pageHeader }
 
             TextArea {
                 id: textArea
@@ -135,7 +133,7 @@ Page {
 
             Item {
                 height: Theme.paddingMedium
-                width: parent.width
+                width: 1
             }
 
             Button {
@@ -298,24 +296,9 @@ Page {
             }
 
             Item {
-                visible: timestampLabel.visible
-                height: Theme.paddingSmall
-                width: parent.width
-            }
-
-            Label {
-                id: timestampLabel
-                anchors.horizontalCenter: parent.horizontalCenter
-                color: Theme.secondaryColor
-                font.pixelSize: Theme.fontSizeExtraSmall
-                text: timestamp
-                visible: image.visible && timestamp.length > 0
-            }
-
-            Item {
                 visible: image.visible
                 height: Theme.paddingLarge
-                width: parent.width
+                width: 1
             }
         }
 

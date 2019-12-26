@@ -219,11 +219,6 @@
         <extracomment>Placeholder text</extracomment>
         <translation>Verlauf ist leer</translation>
     </message>
-    <message id="text-header">
-        <source>Decoded text</source>
-        <extracomment>Page header</extracomment>
-        <translation>Entschlüsselter Text</translation>
-    </message>
     <message id="text-open_link">
         <source>Open link</source>
         <extracomment>Button text</extracomment>

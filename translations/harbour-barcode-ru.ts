@@ -221,11 +221,6 @@
         <extracomment>Placeholder text</extracomment>
         <translation>Тут ничего нет</translation>
     </message>
-    <message id="text-header">
-        <source>Decoded text</source>
-        <extracomment>Page header</extracomment>
-        <translation>Декодированный текст</translation>
-    </message>
     <message id="text-open_link">
         <source>Open link</source>
         <extracomment>Button text</extracomment>

@@ -217,11 +217,6 @@
         <extracomment>Placeholder text</extracomment>
         <translation>历史记录为空</translation>
     </message>
-    <message id="text-header">
-        <source>Decoded text</source>
-        <extracomment>Page header</extracomment>
-        <translation>解码文本</translation>
-    </message>
     <message id="text-open_link">
         <source>Open link</source>
         <extracomment>Button text</extracomment>

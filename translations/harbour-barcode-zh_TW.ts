@@ -217,11 +217,6 @@
         <extracomment>Slider label</extracomment>
         <translation type="unfinished"></translation>
     </message>
-    <message id="text-header">
-        <source>Decoded text</source>
-        <extracomment>Page header</extracomment>
-        <translation>文字解碼</translation>
-    </message>
     <message id="text-open_link">
         <source>Open link</source>
         <extracomment>Button text</extracomment>

@@ -221,11 +221,6 @@
         <extracomment>Placeholder text</extracomment>
         <translation>Historie je prázdná</translation>
     </message>
-    <message id="text-header">
-        <source>Decoded text</source>
-        <extracomment>Page header</extracomment>
-        <translation>Dekódovaný text</translation>
-    </message>
     <message id="text-open_link">
         <source>Open link</source>
         <extracomment>Button text</extracomment>
