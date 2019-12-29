@@ -16,7 +16,7 @@
    version="1.1"
    inkscape:version="0.92.4 5da689c313, 2019-01-14"
    sodipodi:docname="harbour-barcode.svg"
-   inkscape:export-filename="C:\Users\Stephan\Desktop\double-shape.png"
+   inkscape:export-filename="harbour-barcode.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -65,37 +65,6 @@
        gradientUnits="userSpaceOnUse"
        gradientTransform="translate(0,4.211914)" />
   </defs>
-  <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="10.127907"
-     inkscape:cx="26.06659"
-     inkscape:cy="43"
-     inkscape:document-units="px"
-     inkscape:current-layer="layer2"
-     showgrid="false"
-     inkscape:window-width="1559"
-     inkscape:window-height="1080"
-     inkscape:window-x="236"
-     inkscape:window-y="9"
-     inkscape:window-maximized="0"
-     inkscape:snap-bbox="true"
-     inkscape:snap-global="true"
-     width="86px"
-     inkscape:snap-grids="false"
-     showguides="false">
-    <inkscape:grid
-       type="xygrid"
-       id="grid2985"
-       empspacing="5"
-       visible="true"
-       enabled="true"
-       snapvisiblegridlinesonly="true" />
-  </sodipodi:namedview>
   <metadata
      id="metadata7">
     <rdf:RDF>
