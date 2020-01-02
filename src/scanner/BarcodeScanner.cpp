@@ -2,7 +2,7 @@
 The MIT License (MIT)
 
 Copyright (c) 2014 Steffen Förster
-Copyright (c) 2018-2019 Slava Monich
+Copyright (c) 2018-2020 Slava Monich
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -37,9 +37,10 @@ THE SOFTWARE.
 
 #ifdef HARBOUR_DEBUG
 #include <QStandardPaths>
+static const QDir debugImageDir(QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) + "/codereader");
 static void saveDebugImage(const QImage& aImage, const QString& aFileName)
 {
-    QString path = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) + "/codereader/" + aFileName;
+    QString path = debugImageDir.filePath(aFileName);
     if (aImage.save(path)) {
         HDEBUG("image saved:" << qPrintable(path));
     }
@@ -309,6 +310,33 @@ void BarcodeScanner::Private::decodingThread()
             HDEBUG("extracted" << image);
             saveDebugImage(image, "debug_cropped.bmp");
 
+#if HARBOUR_DEBUG
+            // In debug build, ~/Pictures/codereader/debug_input.bmp gets
+            // processed instead of the actual captured and cropped image,
+            // if such file exists. Normally it doesn't exist. If you need
+            // to debug decoding of the same image, you would do something
+            // like this:
+            //
+            // $ mkdir ~/Pictures/codereader
+            //
+            // try debuging the image, abort/finish the decoding the then
+            //
+            // $ cd ~/Pictures/codereader
+            // $ cp debug_cropped.bmp debug_input.bmp
+            //
+            // And then whenever you start capture this file will be picked
+            // up instead of the actual input.
+            //
+            if (debugImageDir.exists()) {
+                QImage debugImage;
+                QString filePath = debugImageDir.filePath("debug_input.bmp");
+                if (debugImage.load(filePath)) {
+                    HDEBUG("LOADED" << qPrintable(filePath));
+                    image = debugImage;
+                }
+            }
+#endif // HARBOUR_DEBUG
+
             QImage scaledImage;
             if (image.width() > maxSize || image.height() > maxSize) {
                 Qt::TransformationMode mode = Qt::SmoothTransformation;
@@ -327,11 +355,19 @@ void BarcodeScanner::Private::decodingThread()
                 scale = 1;
             }
 
-            ImageSource* source = new ImageSource(scaledImage);
-            saveDebugImage(source->grayscaleImage(), "debug_grayscale.bmp");
-
             // Ref takes ownership of ImageSource:
+            ImageSource* source = new ImageSource(scaledImage);
             zxing::Ref<zxing::LuminanceSource> sourceRef(source);
+
+#if HARBOUR_DEBUG
+            // These are expensive, check if directory exists before
+            // generating debug images (esp. the black & white one,
+            // which is purely for debugging)
+            if (debugImageDir.exists()) {
+                saveDebugImage(source->grayscaleImage(), "debug_grayscale.bmp");
+                saveDebugImage(source->bwImage(), "debug_bw.bmp");
+            }
+#endif // HARBOUR_DEBUG
 
             HDEBUG("decoding screenshot ...");
             result = decoder.decode(sourceRef);

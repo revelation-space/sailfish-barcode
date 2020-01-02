@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2018-2019 Slava Monich
+Copyright (c) 2018-2020 Slava Monich
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,8 @@ THE SOFTWARE.
 */
 
 #include "ImageSource.h"
+
+#include <zxing/common/GlobalHistogramBinarizer.h>
 
 ImageSource::ImageSource(QImage aImage) :
     zxing::LuminanceSource(aImage.width(), aImage.height())
@@ -105,4 +107,29 @@ QImage ImageSource::grayscaleImage() const
         }
     }
     return QImage((uchar*)buf, w, h, QImage::Format_ARGB32, free, buf);
+}
+
+QImage ImageSource::bwImage()
+{
+    zxing::GlobalHistogramBinarizer binarizer(zxing::Ref<zxing::LuminanceSource>(this));
+    zxing::Ref<zxing::BitMatrix> matrix = binarizer.getBlackMatrix();
+    const int w = iImage.width();
+    const int h =  iImage.height();
+    QImage img(w, h, QImage::Format_Mono);
+    QVector<QRgb> colors;
+    colors.append(qRgb(255, 255, 255));
+    colors.append(qRgb(0, 0, 0));
+    img.setColorTable(colors);
+    for (int y = 0; y < h; y ++) {
+        zxing::Ref<zxing::BitArray> row = matrix->getRow(y, zxing::Ref<zxing::BitArray>());
+        uchar* ptr = img.scanLine(y);
+        for (int x = 0; x < w; ) {
+            uchar b = 0;
+            for (int i = 0; i < 8; i++, x++) {
+                b = (b << 1) | ((uchar) row->get(x));
+            }
+            *ptr++ = b;
+        }
+    }
+    return img;
 }

@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2018 Slava Monich
+Copyright (c) 2018-2020 Slava Monich
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +38,7 @@ public:
     ~ImageSource();
     
     QImage grayscaleImage() const;
+    QImage bwImage();
 
     zxing::ArrayRef<zxing::byte> getRow(int aY, zxing::ArrayRef<zxing::byte> aRow) const Q_DECL_OVERRIDE;
     zxing::ArrayRef<zxing::byte> getMatrix() const Q_DECL_OVERRIDE;
