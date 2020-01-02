@@ -14,6 +14,8 @@ isEmpty(VERSION) {
     message("VERSION is unset, assuming $$VERSION")
 }
 
+QMAKE_CXXFLAGS += -Wno-unused-parameter
+
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 INCLUDEPATH += \
@@ -174,14 +176,12 @@ SOURCES += \
     src/zxing/zxing/common/reedsolomon/GenericGF.cpp \
     src/zxing/zxing/common/reedsolomon/GenericGFPoly.cpp \
     src/zxing/zxing/common/reedsolomon/ReedSolomonDecoder.cpp \
-    src/zxing/zxing/common/reedsolomon/ReedSolomonEncoder.cpp \
     src/zxing/zxing/common/reedsolomon/ReedSolomonException.cpp
 
 HEADERS += \
     src/zxing/zxing/common/reedsolomon/GenericGF.h \
     src/zxing/zxing/common/reedsolomon/GenericGFPoly.h \
     src/zxing/zxing/common/reedsolomon/ReedSolomonDecoder.h \
-    src/zxing/zxing/common/reedsolomon/ReedSolomonEncoder.h \
     src/zxing/zxing/common/reedsolomon/ReedSolomonException.h
 
 SOURCES += \
@@ -323,12 +323,7 @@ SOURCES += \
     src/zxing/zxing/qrcode/detector/QRDetector.cpp \
     src/zxing/zxing/qrcode/detector/QRFinderPattern.cpp \
     src/zxing/zxing/qrcode/detector/QRFinderPatternFinder.cpp \
-    src/zxing/zxing/qrcode/detector/QRFinderPatternInfo.cpp \
-    src/zxing/zxing/qrcode/encoder/ByteMatrix.cpp \
-    src/zxing/zxing/qrcode/encoder/MaskUtil.cpp \
-    src/zxing/zxing/qrcode/encoder/MatrixUtil.cpp \
-    src/zxing/zxing/qrcode/encoder/QRCode.cpp \
-    src/zxing/zxing/qrcode/encoder/QREncoder.cpp
+    src/zxing/zxing/qrcode/detector/QRFinderPatternInfo.cpp
 
 HEADERS += \
     src/zxing/zxing/qrcode/decoder/BitMatrixParser.h \
@@ -343,12 +338,6 @@ HEADERS += \
     src/zxing/zxing/qrcode/detector/FinderPatternFinder.h \
     src/zxing/zxing/qrcode/detector/FinderPattern.h \
     src/zxing/zxing/qrcode/detector/FinderPatternInfo.h \
-    src/zxing/zxing/qrcode/encoder/BlockPair.h \
-    src/zxing/zxing/qrcode/encoder/ByteMatrix.h \
-    src/zxing/zxing/qrcode/encoder/Encoder.h \
-    src/zxing/zxing/qrcode/encoder/MaskUtil.h \
-    src/zxing/zxing/qrcode/encoder/MatrixUtil.h \
-    src/zxing/zxing/qrcode/encoder/QRCode.h \
     src/zxing/zxing/qrcode/ErrorCorrectionLevel.h \
     src/zxing/zxing/qrcode/FormatInformation.h \
     src/zxing/zxing/qrcode/QRCodeReader.h \
