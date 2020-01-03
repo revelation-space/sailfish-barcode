@@ -16,7 +16,9 @@ isEmpty(VERSION) {
 
 QMAKE_CXXFLAGS += -Wno-unused-parameter
 
-DEFINES += APP_VERSION=\\\"$$VERSION\\\"
+DEFINES += \
+  APP_VERSION=\\\"$$VERSION\\\" \
+  NO_ICONV
 
 INCLUDEPATH += \
     src \

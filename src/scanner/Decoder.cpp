@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2018-2019 Slava Monich
+Copyright (c) 2018-2020 Slava Monich
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -192,7 +192,8 @@ Decoder::Result Decoder::decode(zxing::Ref<zxing::LuminanceSource> aSource)
             points.append(QPointF(point.getX(), point.getY()));
         }
 
-        return Result(result->getText()->getText().c_str(), points,
+        const std::string& text = result->getText()->getText();
+        return Result(QString::fromUtf8(text.c_str(), text.length()), points,
             result->getBarcodeFormat());
     } catch (zxing::Exception& e) {
         HDEBUG("Exception:" << e.what());
