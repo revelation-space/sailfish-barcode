@@ -195,10 +195,6 @@ Page {
                     imgSrc: "img/codebar_240.png"
                 }
                 ListElement {
-                    name: "MaxiCode"
-                    imgSrc: "img/maxicode_240.png"
-                }
-                ListElement {
                     name: "PDF417"
                     imgSrc: "img/pdf417_240.png"
                 }
