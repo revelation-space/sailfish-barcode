@@ -237,7 +237,7 @@ Page {
 
                         Text {
                             text: name;
-                            font.pixelSize: Theme.fontSizeExtraSmall
+                            font.pixelSize: 32
                             color: "black"
                             anchors {
                                 bottomMargin: 2
