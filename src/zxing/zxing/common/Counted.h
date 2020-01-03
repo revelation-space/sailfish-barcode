@@ -25,7 +25,7 @@ namespace zxing {
 /* base class for reference-counted objects */
 class Counted {
 private:
-  unsigned int count_;
+  int count_;
 public:
   Counted() :
       count_(0) {
@@ -41,7 +41,7 @@ public:
     return this;
   }
   void release() {
-#if FBREADER_USE_GNUC_SYNC_BUILTINS
+#if __GNUC__
     if (!__sync_sub_and_fetch(&count_, 1)) {
 #else
     count_--;
@@ -54,7 +54,13 @@ public:
 
   /* return the current count for debugging purposes or similar */
   int count() const {
+#if __GNUC__
+    int ret;
+    __atomic_load(&count_, &ret, __ATOMIC_RELAXED);
+    return ret;
+#else
     return count_;
+#endif
   }
 };
 
