@@ -2,7 +2,7 @@
 The MIT License (MIT)
 
 Copyright (c) 2014 Steffen Förster
-Copyright (c) 2018-2019 Slava Monich
+Copyright (c) 2018-2020 Slava Monich
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -156,47 +156,51 @@ Page {
                 id: imageModel
                 ListElement {
                     name: "QR code"
-                    imgSrc: "img/qr-code_240.png"
+                    imgSrc: "qr-code_240.png"
                 }
                 ListElement {
                     name: "Aztec"
-                    imgSrc: "img/aztec_240.png"
+                    imgSrc: "aztec_240.png"
                 }
                 ListElement {
                     name: "Data Matrix"
-                    imgSrc: "img/datamatrix_240.png"
+                    imgSrc: "datamatrix_240.png"
                 }
                 ListElement {
                     name: "Code 39"
-                    imgSrc: "img/code-39_240.png"
+                    imgSrc: "code-39_240.png"
                 }
                 ListElement {
                     name: "Code 93"
-                    imgSrc: "img/code-93_240.png"
+                    imgSrc: "code-93_240.png"
                 }
                 ListElement {
                     name: "Code 128"
-                    imgSrc: "img/code-128_240.png"
+                    imgSrc: "code-128_240.png"
+                }
+                ListElement {
+                    name: "EAN 8"
+                    imgSrc: "ean-8_240.png"
                 }
                 ListElement {
                     name: "EAN 13"
-                    imgSrc: "img/ean-13_240.png"
+                    imgSrc: "ean-13_240.png"
                 }
                 ListElement {
                     name: "Interleaved 2/5"
-                    imgSrc: "img/interleaved_240.png"
+                    imgSrc: "interleaved_240.png"
                 }
                 ListElement {
-                    name: "UPC-A"
-                    imgSrc: "img/upc_240.png"
+                    name: "UPC"
+                    imgSrc: "upc_240.png"
                 }
                 ListElement {
                     name: "Codebar"
-                    imgSrc: "img/codebar_240.png"
+                    imgSrc: "codebar_240.png"
                 }
                 ListElement {
                     name: "PDF417"
-                    imgSrc: "img/pdf417_240.png"
+                    imgSrc: "pdf417_240.png"
                 }
             }
 
@@ -230,7 +234,7 @@ Page {
                     height: grid.cellHeight
 
                     Image {
-                        source: imgSrc;
+                        source: "img/" + imgSrc;
                         anchors {
                             centerIn: parent
                         }
