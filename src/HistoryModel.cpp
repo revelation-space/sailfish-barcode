@@ -538,7 +538,7 @@ QString HistoryModel::insert(QImage aImage, QString aText, QString aFormat)
     return id;
 }
 
-QString HistoryModel::concatenateCodes(QList<int> aRows, QChar aSeparator)
+QString HistoryModel::concatenateCodes(QList<int> aRows, QString aSeparator)
 {
     QString text;
     const int n = aRows.count();
