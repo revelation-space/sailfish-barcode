@@ -28,32 +28,30 @@
 namespace zxing {
 
 template<typename T> class Array : public Counted {
-protected:
-public:
+private:
   std::vector<T> values_;
+public:
   Array() {}
   Array(int n) :
-      Counted(), values_(n, T()) {
+      values_(n, T()) {
   }
   Array(T const* ts, int n) :
-      Counted(), values_(ts, ts+n) {
+      values_(ts, ts+n) {
   }
   Array(T const* ts, T const* te) :
-      Counted(), values_(ts, te) {
+      values_(ts, te) {
   }
   Array(T v, int n) :
-      Counted(), values_(n, v) {
+      values_(n, v) {
   }
   Array(std::vector<T> &v) :
-      Counted(), values_(v) {
+      values_(v) {
   }
   Array(Array<T> &other) :
-      Counted(), values_(other.values_) {
+      values_(other.values_) {
   }
   Array(Array<T> *other) :
-      Counted(), values_(other->values_) {
-  }
-  virtual ~Array() {
+      values_(other->values_) {
   }
   Array<T>& operator=(const Array<T> &other) {
     values_ = other.values_;
@@ -86,10 +84,10 @@ public:
   }
 };
 
-template<typename T> class ArrayRef : public Counted {
+template<typename T> class ArrayRef {
 private:
-public:
   Array<T> *array_;
+public:
   ArrayRef() :
       array_(0) {
   }
@@ -105,15 +103,9 @@ public:
       array_(0) {
     reset(a);
   }
-  ArrayRef(const ArrayRef &other) :
-      Counted(), array_(0) {
-    reset(other.array_);
-  }
-
-  template<class Y>
-  ArrayRef(const ArrayRef<Y> &other) :
+  ArrayRef(const ArrayRef<T> &other) :
       array_(0) {
-    reset(static_cast<const Array<T> *>(other.array_));
+    reset(other.array_);
   }
 
   ~ArrayRef() {
