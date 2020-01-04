@@ -54,13 +54,7 @@ public:
 
   /* return the current count for debugging purposes or similar */
   int count() const {
-#if __GNUC__
-    int ret;
-    __atomic_load(&count_, &ret, __ATOMIC_RELAXED);
-    return ret;
-#else
     return count_;
-#endif
   }
 };
 
