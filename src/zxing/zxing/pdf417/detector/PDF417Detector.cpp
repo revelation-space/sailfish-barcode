@@ -19,14 +19,12 @@
 #include <zxing/pdf417/detector/Detector.h>
 #include <zxing/pdf417/detector/LinesSampler.h>
 #include <zxing/common/GridSampler.h>
-#include <zxing/common/detector/JavaMath.h>
 #include <zxing/common/detector/MathUtils.h>
 
 using std::max;
 using std::abs;
 using std::numeric_limits;
 using zxing::pdf417::detector::Detector;
-using zxing::common::detector::Math;
 using zxing::common::detector::MathUtils;
 using zxing::Ref;
 using zxing::ArrayRef;
@@ -457,10 +455,10 @@ void Detector::findWideBarTopBottom(Ref<BitMatrix> matrix,
   float barDiff = verticeEnd->getX() - verticeStart->getX();
   float barStart = verticeStart->getX() + barDiff * (float)startWideBar / (float)lenPattern;
   float barEnd = verticeStart->getX() + barDiff * (float)endWideBar / (float)lenPattern;
-  int x = Math::round((barStart + barEnd) / 2.0f);
+  int x = MathUtils::round((barStart + barEnd) / 2.0f);
 
   // Start vertically between the preliminary vertices.
-  int yStart = Math::round(verticeStart->getY());
+  int yStart = MathUtils::round(verticeStart->getY());
   int y = yStart;
 
   // Find offset of thin bar to the right as additional safeguard.
@@ -529,8 +527,8 @@ void Detector::findCrossingPoint(ArrayRef< Ref<ResultPoint> >& vertices,
     throw NotFoundException("PDF:Detector: cannot find the crossing of parallel lines!");
   }
 
-  int x = Math::round(result.x);
-  int y = Math::round(result.y);
+  int x = MathUtils::round(result.x);
+  int y = MathUtils::round(result.y);
   if (x < 0 || x >= (int)matrix->getWidth() || y < 0 || y >= (int)matrix->getHeight()) {
     throw NotFoundException("PDF:Detector: crossing points out of region!");
   }

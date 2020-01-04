@@ -134,8 +134,6 @@ SOURCES += \
     src/zxing/zxing/common/DecoderResult.cpp \
     src/zxing/zxing/common/DetectorResult.cpp \
     src/zxing/zxing/common/GlobalHistogramBinarizer.cpp \
-    src/zxing/zxing/common/GreyscaleLuminanceSource.cpp \
-    src/zxing/zxing/common/GreyscaleRotatedLuminanceSource.cpp \
     src/zxing/zxing/common/GridSampler.cpp \
     src/zxing/zxing/common/HybridBinarizer.cpp \
     src/zxing/zxing/common/IllegalArgumentException.cpp \
@@ -153,8 +151,6 @@ HEADERS += \
     src/zxing/zxing/common/DecoderResult.h \
     src/zxing/zxing/common/DetectorResult.h \
     src/zxing/zxing/common/GlobalHistogramBinarizer.h \
-    src/zxing/zxing/common/GreyscaleLuminanceSource.h \
-    src/zxing/zxing/common/GreyscaleRotatedLuminanceSource.h \
     src/zxing/zxing/common/GridSampler.h \
     src/zxing/zxing/common/HybridBinarizer.h \
     src/zxing/zxing/common/IllegalArgumentException.h \
@@ -169,7 +165,6 @@ SOURCES += \
     src/zxing/zxing/common/detector/WhiteRectangleDetector.cpp
 
 HEADERS += \
-    src/zxing/zxing/common/detector/JavaMath.h \
     src/zxing/zxing/common/detector/MathUtils.h \
     src/zxing/zxing/common/detector/MonochromeRectangleDetector.h \
     src/zxing/zxing/common/detector/WhiteRectangleDetector.h
