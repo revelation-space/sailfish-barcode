@@ -112,24 +112,29 @@ QImage ImageSource::grayscaleImage() const
 QImage ImageSource::bwImage()
 {
     zxing::GlobalHistogramBinarizer binarizer(zxing::Ref<zxing::LuminanceSource>(this));
-    zxing::Ref<zxing::BitMatrix> matrix = binarizer.getBlackMatrix();
-    const int w = iImage.width();
-    const int h =  iImage.height();
-    QImage img(w, h, QImage::Format_Mono);
-    QVector<QRgb> colors;
-    colors.append(qRgb(255, 255, 255));
-    colors.append(qRgb(0, 0, 0));
-    img.setColorTable(colors);
-    for (int y = 0; y < h; y ++) {
-        zxing::Ref<zxing::BitArray> row = matrix->getRow(y, zxing::Ref<zxing::BitArray>());
-        uchar* ptr = img.scanLine(y);
-        for (int x = 0; x < w; ) {
-            uchar b = 0;
-            for (int i = 0; i < 8; i++, x++) {
-                b = (b << 1) | ((uchar) row->get(x));
+    try {
+        zxing::Ref<zxing::BitMatrix> matrix = binarizer.getBlackMatrix();
+        const int w = iImage.width();
+        const int h =  iImage.height();
+        QImage img(w, h, QImage::Format_Mono);
+        QVector<QRgb> colors;
+        colors.append(qRgb(255, 255, 255));
+        colors.append(qRgb(0, 0, 0));
+        img.setColorTable(colors);
+        for (int y = 0; y < h; y ++) {
+            zxing::Ref<zxing::BitArray> row = matrix->getRow(y, zxing::Ref<zxing::BitArray>());
+            uchar* ptr = img.scanLine(y);
+            for (int x = 0; x < w; ) {
+                uchar b = 0;
+                for (int i = 0; i < 8; i++, x++) {
+                    b = (b << 1) | ((uchar) row->get(x));
+                }
+                *ptr++ = b;
             }
-            *ptr++ = b;
         }
+        return img;
+    } catch (std::exception&) {
+        // GlobalHistogramBinarizer::getBlackMatrix() has thrown up
+        return QImage();
     }
-    return img;
 }

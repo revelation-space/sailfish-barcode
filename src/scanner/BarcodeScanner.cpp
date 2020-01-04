@@ -40,9 +40,11 @@ THE SOFTWARE.
 static const QDir debugImageDir(QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) + "/codereader");
 static void saveDebugImage(const QImage& aImage, const QString& aFileName)
 {
-    QString path = debugImageDir.filePath(aFileName);
-    if (aImage.save(path)) {
-        HDEBUG("image saved:" << qPrintable(path));
+    if (!aImage.isNull()) {
+        QString path = debugImageDir.filePath(aFileName);
+        if (aImage.save(path)) {
+            HDEBUG("image saved:" << qPrintable(path));
+        }
     }
 }
 #else
