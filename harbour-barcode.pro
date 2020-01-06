@@ -235,22 +235,6 @@ HEADERS += \
     src/zxing/zxing/aztec/detector/Detector.h
 
 SOURCES += \
-    src/zxing/zxing/multi/GenericMultipleBarcodeReader.cpp \
-    src/zxing/zxing/multi/MultipleBarcodeReader.cpp \
-    src/zxing/zxing/multi/ByQuadrantReader.cpp \
-    src/zxing/zxing/multi/qrcode/QRCodeMultiReader.cpp \
-    src/zxing/zxing/multi/qrcode/detector/MultiDetector.cpp \
-    src/zxing/zxing/multi/qrcode/detector/MultiFinderPatternFinder.cpp
-
-HEADERS += \
-    src/zxing/zxing/multi/ByQuadrantReader.h \
-    src/zxing/zxing/multi/GenericMultipleBarcodeReader.h \
-    src/zxing/zxing/multi/MultipleBarcodeReader.h \
-    src/zxing/zxing/multi/qrcode/QRCodeMultiReader.h \
-    src/zxing/zxing/multi/qrcode/detector/MultiDetector.h \
-    src/zxing/zxing/multi/qrcode/detector/MultiFinderPatternFinder.h
-
-SOURCES += \
     src/zxing/zxing/oned/CodaBarReader.cpp \
     src/zxing/zxing/oned/Code128Reader.cpp \
     src/zxing/zxing/oned/Code39Reader.cpp \
