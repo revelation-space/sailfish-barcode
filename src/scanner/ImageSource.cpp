@@ -79,7 +79,7 @@ const zxing::byte* ImageSource::getGrayRow(int aY) const
     if (!iGrayRows[aY]) {
         const int width = iImage.width();
         zxing::byte* row = new zxing::byte[width];
-        const QRgb* pixels = (const QRgb*)iImage.scanLine(aY);
+        const QRgb* pixels = (const QRgb*)iImage.constScanLine(aY);
         for (int x = 0; x < width; x++) {
             const QRgb rgb = *pixels++;
             // This is significantly faster than gGray() but is
