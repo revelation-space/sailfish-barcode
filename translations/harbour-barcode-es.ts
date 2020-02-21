@@ -229,6 +229,11 @@
         <extracomment>Button text</extracomment>
         <translation>Tarjeta de contacto</translation>
     </message>
+    <message id="text-add_to_calendar">
+        <source>Add to calendar</source>
+        <extracomment>Button text</extracomment>
+        <translation type="unfinished">Añadir al calendario</translation>
+    </message>
     <message id="text-fetch_receipt">
         <source>Fetch receipt</source>
         <extracomment>Button text</extracomment>

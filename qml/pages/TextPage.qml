@@ -41,8 +41,11 @@ Page {
     property alias format: pageHeader.title
     property alias timestamp: pageHeader.description
     readonly property string normalizedText: Utils.convertLineBreaks(text)
-    readonly property bool isVCard: Utils.isVcard(normalizedText)
+    readonly property bool isLink: Utils.isLink(textPage.text) && !isVCard && !isVEvent
+    readonly property bool isVCard: Utils.isVcard(normalizedText) && !isVEvent
+    readonly property bool isVEvent: Utils.isVevent(normalizedText)
     readonly property bool haveContact: vcard ? (vcard.count > 0) : false
+    readonly property bool haveEvent: !!calendarEvent.fileName
     property var vcard
 
     signal deleteEntry()
@@ -68,6 +71,13 @@ Page {
             // Hide the keyboard on flick
             textArea.focus = false
         }
+    }
+
+    TemporaryFile {
+        id: calendarEvent
+
+        content: isVEvent ? Utils.calendarText(normalizedText) : ""
+        fileTemplate: isVEvent ? "barcodeXXXXXX.ics" : ""
     }
 
     ReceiptFetcher {
@@ -131,17 +141,8 @@ Page {
                 }
             }
 
-            Item {
-                height: Theme.paddingMedium
-                width: 1
-            }
-
             Button {
                 id: button
-
-                readonly property bool isLink: Utils.isLink(textPage.text)
-                readonly property bool isReceipt: receiptFetcher.state !== ReceiptFetcher.StateIdle
-                readonly property bool isContact: textPage.haveContact
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: {
@@ -149,10 +150,14 @@ Page {
                         //: Button text
                         //% "Open link"
                         return qsTrId("text-open_link")
-                    } else if (isContact) {
+                    } else if (haveContact) {
                         //: Button text
                         //% "Contact card"
                         return qsTrId("text-contact_card")
+                    } else if (haveEvent) {
+                        //: Button text
+                        //% "Add to calendar"
+                        return qsTrId("text-add_to_calendar")
                     } else if (receiptFetcher.state === ReceiptFetcher.StateChecking) {
                         return holdOffTimer.running ?
                             //: Button text
@@ -161,20 +166,26 @@ Page {
                             //: Button label (cancel network operation)
                             //% "Cancel"
                             qsTrId("text-cancel_fetching")
-                    } else {
+                    } else if (receiptFetcher.state !== ReceiptFetcher.StateIdle) {
                         //: Button text
                         //% "Fetch receipt"
                         return qsTrId("text-fetch_receipt")
+                    } else {
+                        return ""
                     }
                 }
-                visible: isLink || isReceipt || isContact
+                visible: text.length > 0
                 enabled: !holdOffTimer.running
                 onClicked: {
                     if (isLink) {
                         console.log("opening", textPage.text)
                         Qt.openUrlExternally(textPage.text)
                         holdOffTimer.restart()
-                    } else if (isContact) {
+                    } else if (haveEvent) {
+                        console.log("importing", calendarEvent.url)
+                        Qt.openUrlExternally(calendarEvent.url)
+                        holdOffTimer.restart()
+                    } else if (haveContact) {
                         // Workaround for Sailfish.Contacts not being allowed in harbour apps
                         var page = Qt.createQmlObject("import QtQuick 2.0;import Sailfish.Silica 1.0;import Sailfish.Contacts 1.0; \
     Page { id: page; signal saveContact(); property alias contact: card.contact; property alias saveText: saveMenu.text; \
