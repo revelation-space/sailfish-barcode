@@ -77,7 +77,7 @@ Page {
         id: calendarEvent
 
         content: isVEvent ? Utils.calendarText(normalizedText) : ""
-        fileTemplate: isVEvent ? "barcodeXXXXXX.ics" : ""
+        fileTemplate: isVEvent ? "barcodeXXXXXX.vcs" : ""
     }
 
     ReceiptFetcher {

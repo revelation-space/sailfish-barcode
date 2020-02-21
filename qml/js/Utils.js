@@ -68,7 +68,7 @@ function isText(text) {
 
 function calendarText(text) {
     return (text.substring(0,12) === "BEGIN:VEVENT") ?
-        ("BEGIN:VCALENDAR\nVERSION:2.0\n" + text + "\nEND:VCALENDAR") :
+        ("BEGIN:VCALENDAR\nVERSION:1.0\n" + text + "\nEND:VCALENDAR") :
         text
 }
 
