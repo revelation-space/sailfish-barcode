@@ -222,6 +222,11 @@
         <extracomment>Button text</extracomment>
         <translation>打开链接</translation>
     </message>
+    <message id="text-open_url">
+        <source>Open URL</source>
+        <extracomment>Button text</extracomment>
+        <translation type="unfinished">打开网址</translation>
+    </message>
     <message id="text-contact_card">
         <source>Contact card</source>
         <extracomment>Button text</extracomment>
@@ -306,6 +311,11 @@
         <source>Open link in browser</source>
         <extracomment>Hint label</extracomment>
         <translation>在浏览器中打开</translation>
+    </message>
+    <message id="hint-open_url">
+        <source>Open URL in default application</source>
+        <extracomment>Hint label</extracomment>
+        <translation type="unfinished">在默认应用程序中打开URL</translation>
     </message>
     <message id="settings-display-section">
         <source>Display</source>

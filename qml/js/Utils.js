@@ -24,6 +24,7 @@ THE SOFTWARE.
 */
 
 .pragma library
+.import harbour.barcode 1.0 as App
 
 function isVcard(text) {
     if (text.length > 11 && text.substring(0,11) === "BEGIN:VCARD") {
@@ -54,12 +55,13 @@ function isVevent(text) {
     return false
 }
 
+function isUrl(text) {
+    return App.BarcodeUtils.urlScheme(text).length > 0
+}
+
 function isLink(text) {
-    if (text !== "") {
-        var urls = text.match(/^(http[s]*:\/\/.{3,500}|www\..{3,500}|sms:.*)$/)
-        return urls && urls.length > 0
-    }
-    return false
+    var scheme = App.BarcodeUtils.urlScheme(text)
+    return scheme === "http" || scheme === "https"
 }
 
 function isText(text) {

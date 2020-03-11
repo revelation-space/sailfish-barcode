@@ -2,7 +2,7 @@
 The MIT License (MIT)
 
 Copyright (c) 2014 Steffen Förster
-Copyright (c) 2018-2019 Slava Monich
+Copyright (c) 2018-2020 Slava Monich
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -42,6 +42,7 @@ THE SOFTWARE.
 #include "HarbourTemporaryFile.h"
 #include "HarbourTheme.h"
 
+#include "BarcodeUtils.h"
 #include "ContactsPlugin.h"
 #include "Database.h"
 #include "HistoryImageProvider.h"
@@ -66,6 +67,7 @@ static void register_types(QQmlEngine* engine, const char* uri, int v1, int v2)
     qmlRegisterType<OfdReceiptFetcher>(uri, v1, v2, "ReceiptFetcher");
     qmlRegisterType<Settings>(uri, v1, v2, "Settings");
     qmlRegisterSingletonType<HistoryModel>(uri, v1, v2, "HistoryModel", HistoryModel::createSingleton);
+    qmlRegisterSingletonType<BarcodeUtils>(uri, v1, v2, "BarcodeUtils", BarcodeUtils::createSingleton);
 }
 
 static QSize toSize(QVariant var)

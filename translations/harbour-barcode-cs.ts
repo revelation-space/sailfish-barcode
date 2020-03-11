@@ -226,6 +226,11 @@
         <extracomment>Button text</extracomment>
         <translation>Otevřít odkaz</translation>
     </message>
+    <message id="text-open_url">
+        <source>Open URL</source>
+        <extracomment>Button text</extracomment>
+        <translation>Otevřít URL</translation>
+    </message>
     <message id="text-contact_card">
         <source>Contact card</source>
         <extracomment>Button text</extracomment>
@@ -310,6 +315,11 @@
         <source>Open link in browser</source>
         <extracomment>Hint label</extracomment>
         <translation type="unfinished">Otevřít odkaz v prohlížeči</translation>
+    </message>
+    <message id="hint-open_url">
+        <source>Open URL in default application</source>
+        <extracomment>Hint label</extracomment>
+        <translation type="unfinished">Otevřít URL ve výchozí aplikaci</translation>
     </message>
     <message id="settings-display-section">
         <source>Display</source>

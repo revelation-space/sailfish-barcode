@@ -30,6 +30,7 @@ CONFIG(debug, debug|release) {
 }
 
 SOURCES += \
+    src/BarcodeUtils.cpp \
     src/ContactsPlugin.cpp \
     src/Database.cpp \
     src/harbour-barcode.cpp \
@@ -42,6 +43,7 @@ SOURCES += \
     src/scanner/ImageSource.cpp
 
 HEADERS += \
+    src/BarcodeUtils.h \
     src/ContactsPlugin.h \
     src/Database.h \
     src/HistoryImageProvider.h \

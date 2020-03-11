@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2019 Slava Monich
+Copyright (c) 2019-2020 Slava Monich
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -46,6 +46,7 @@ ListItem {
             width: parent.width - (2 * Theme.horizontalPageMargin)
             color: item.highlighted ? Theme.highlightColor : Theme.primaryColor
             font.pixelSize: Theme.fontSizeSmall
+            maximumLineCount: 1
             truncationMode: TruncationMode.Fade
             text: Utils.getValueText(item.value)
         }

@@ -481,7 +481,8 @@ Page {
                 readonly property bool haveContact: vcard && vcard.count > 0
                 readonly property string normalizedText: Utils.convertLineBreaks(text)
                 readonly property bool isVCard: Utils.isVcard(normalizedText)
-                readonly property bool isLink: Utils.isLink(normalizedText)
+                readonly property bool isLink: Utils.isLink(text)
+                readonly property bool isUrl: Utils.isUrl(text)
 
                 function setValue(recId, text, format) {
                     clickableResult.recordId = recId
@@ -549,14 +550,20 @@ Page {
                         id: linkButton
                         anchors.verticalCenter: parent.verticalCenter
                         icon {
-                            source: iconSourcePrefix + Qt.resolvedUrl("img/open_link.svg")
+                            source: iconSourcePrefix + (clickableResult.isLink ?
+                                Qt.resolvedUrl("img/open_link.svg") :
+                                Qt.resolvedUrl("img/open_url.svg"))
                             sourceSize: Qt.size(Theme.iconSizeMedium, Theme.iconSizeMedium)
                         }
-                        visible: !clickableResult.haveContact && clickableResult.isLink
+                        visible: !clickableResult.haveContact && clickableResult.isUrl
                         enabled: visible && !holdOffTimer.running
-                        //: Hint label
-                        //% "Open link in browser"
-                        hint: qsTrId("hint-open_link")
+                        hint: clickableResult.isLink ?
+                            //: Hint label
+                            //% "Open link in browser"
+                            qsTrId("hint-open_link") :
+                            //: Hint label
+                            //% "Open URL in default application"
+                            qsTrId("hint-open_url")
                         onShowHint: scanPage.showHint(hint)
                         onHideHint: scanPage.hideHint()
                         onClicked: {

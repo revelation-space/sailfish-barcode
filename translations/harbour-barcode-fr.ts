@@ -224,6 +224,11 @@
         <extracomment>Button text</extracomment>
         <translation>Ouvrir le lien</translation>
     </message>
+    <message id="text-open_url">
+        <source>Open URL</source>
+        <extracomment>Button text</extracomment>
+        <translation>Ouvrir l&apos;URL</translation>
+    </message>
     <message id="text-contact_card">
         <source>Contact card</source>
         <extracomment>Button text</extracomment>
@@ -308,6 +313,11 @@
         <source>Open link in browser</source>
         <extracomment>Hint label</extracomment>
         <translation type="unfinished">Ouvrir le lien dans le navigateur</translation>
+    </message>
+    <message id="hint-open_url">
+        <source>Open URL in default application</source>
+        <extracomment>Hint label</extracomment>
+        <translation type="unfinished">Ouvrir l&apos;URL dans l&apos;application standard</translation>
     </message>
     <message id="settings-display-section">
         <source>Display</source>

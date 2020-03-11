@@ -2,7 +2,7 @@
 The MIT License (MIT)
 
 Copyright (c) 2014 Steffen Förster
-Copyright (c) 2018-2019 Slava Monich
+Copyright (c) 2018-2020 Slava Monich
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -41,6 +41,7 @@ Page {
     property alias format: pageHeader.title
     property alias timestamp: pageHeader.description
     readonly property string normalizedText: Utils.convertLineBreaks(text)
+    readonly property bool isUrl: Utils.isUrl(textPage.text) && !isVCard && !isVEvent
     readonly property bool isLink: Utils.isLink(textPage.text) && !isVCard && !isVEvent
     readonly property bool isVCard: Utils.isVcard(normalizedText) && !isVEvent
     readonly property bool isVEvent: Utils.isVevent(normalizedText)
@@ -150,6 +151,10 @@ Page {
                         //: Button text
                         //% "Open link"
                         return qsTrId("text-open_link")
+                    } else if (isUrl) {
+                        //: Button text
+                        //% "Open URL"
+                        return qsTrId("text-open_url")
                     } else if (haveContact) {
                         //: Button text
                         //% "Contact card"
@@ -177,7 +182,7 @@ Page {
                 visible: text.length > 0
                 enabled: !holdOffTimer.running
                 onClicked: {
-                    if (isLink) {
+                    if (isUrl) {
                         console.log("opening", textPage.text)
                         Qt.openUrlExternally(textPage.text)
                         holdOffTimer.restart()
