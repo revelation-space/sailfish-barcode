@@ -2,7 +2,7 @@
 The MIT License (MIT)
 
 Copyright (c) 2014 Steffen Förster
-Copyright (c) 2018-2019 Slava Monich
+Copyright (c) 2018-2020 Slava Monich
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -487,7 +487,7 @@ Page {
                 function setValue(recId, text, format) {
                     clickableResult.recordId = recId
                     clickableResult.text = text
-                    clickableResult.format = Utils.barcodeFormat(format)
+                    clickableResult.format = format
                     opacity = 1.0
                 }
 
@@ -649,7 +649,7 @@ Page {
                         width: parent.width
                         color: resultItem.highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor
                         font.pixelSize: Theme.fontSizeExtraSmall
-                        text: clickableResult.format
+                        text: Utils.barcodeFormat(clickableResult.format)
                         truncationMode: TruncationMode.Fade
                     }
                 }

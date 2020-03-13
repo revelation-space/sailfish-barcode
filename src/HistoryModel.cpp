@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2018-2019 Slava Monich
+ Copyright (c) 2018-2020 Slava Monich
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -168,9 +168,20 @@ public:
         FIELD_FORMAT,
         NUM_FIELDS
     };
+    // Order of first NUM_FIELDS roles must match the order of fields:
+    enum {
+        FirstRole = Qt::UserRole,
+        IdRole = FirstRole,
+        ValueRole,
+        TimestampRole,
+        FormatRole,
+        HasImageRole,
+        LastRole = HasImageRole
+    };
     static const int DB_SORT_COLUMN = FIELD_TIMESTAMP;
     static const QString DB_TABLE;
     static const QString DB_FIELD[NUM_FIELDS];
+    static const QString HAS_IMAGE;
 
 #define DB_FIELD_ID DB_FIELD[HistoryModel::Private::FIELD_ID]
 #define DB_FIELD_VALUE DB_FIELD[HistoryModel::Private::FIELD_VALUE]
@@ -184,6 +195,7 @@ public:
 
     HistoryModel* historyModel() const;
     QVariant valueAt(int aRow, int aField) const;
+    bool imageFileExistsAt(int aRow) const;
     bool removeExtraRows(int aReserve = 0);
     void commitChanges();
     void cleanupFiles();
@@ -211,6 +223,7 @@ const QString HistoryModel::Private::DB_FIELD[] = {
     QLatin1String(HISTORY_FIELD_TIMESTAMP),
     QLatin1String(HISTORY_FIELD_FORMAT)
 };
+const QString HistoryModel::Private::HAS_IMAGE("hasImage");
 
 HistoryModel::Private::Private(HistoryModel* aPublicModel) :
     QSqlTableModel(aPublicModel, Database::database()),
@@ -264,25 +277,44 @@ QHash<int,QByteArray> HistoryModel::Private::roleNames() const
 {
     QHash<int,QByteArray> roles;
     for (int i = 0; i < NUM_FIELDS; i++) {
-        roles.insert(Qt::UserRole + i, DB_FIELD[i].toUtf8());
+        roles.insert(FirstRole + i, DB_FIELD[i].toUtf8());
     }
+    roles.insert(HasImageRole, HAS_IMAGE.toLatin1());
     return roles;
+}
+
+bool HistoryModel::Private::imageFileExistsAt(int aRow) const
+{
+    bool ok;
+    int id = valueAt(aRow, FIELD_ID).toInt(&ok);
+    if (ok) {
+        const QString path(Database::imageDir().
+            filePath(QString::number(id) + HistoryImageProvider::IMAGE_EXT));
+        if (QFile::exists(path)) {
+            HDEBUG(path << "exists");
+            return true;
+        }
+    }
+    return false;
 }
 
 QVariant HistoryModel::Private::data(const QModelIndex& aIndex, int aRole) const
 {
-    if (aRole < Qt::UserRole) {
-        return QSqlTableModel::data(aIndex, aRole);
-    } else if (aRole >= Qt::UserRole) {
-        const int i = aRole - Qt::UserRole;
+    if (aRole >= FirstRole) {
+        const int i = aRole - FirstRole;
+        const int row = aIndex.row();
         if (i < NUM_FIELDS) {
             int column = iFieldIndex[i];
             if (column >= 0) {
-                return QSqlTableModel::data(index(aIndex.row(), column));
+                return QSqlTableModel::data(index(row, column));
             }
+        } else if (aRole == HasImageRole) {
+            return QVariant::fromValue(iSaveImages && imageFileExistsAt(row));
         }
+        return QVariant();
+    } else {
+        return QSqlTableModel::data(aIndex, aRole);
     }
-    return QVariant();
 }
 
 QVariant HistoryModel::Private::valueAt(int aRow, int aField) const
@@ -451,19 +483,46 @@ bool HistoryModel::saveImages() const
 void HistoryModel::setSaveImages(bool aValue)
 {
     if (iPrivate->iSaveImages != aValue) {
-        iPrivate->iSaveImages = aValue;
         HDEBUG(aValue);
         if (!aValue) {
             if (HistoryImageProvider::instance()) {
                 HistoryImageProvider::instance()->clearCache();
             }
-            // Delete all files on a separate thread
+            // Collect the rows that are about to change
+            // (keeping iSaveImages false)
+            QVector<int> rows;
+            const int totalCount = rowCount();
+            if (totalCount > 0) {
+                rows.reserve(totalCount);
+                for (int i = 0; i < totalCount; i++) {
+                    if (data(index(i, 0), Private::HasImageRole).toBool()) {
+                        rows.append(i);
+                    }
+                }
+            }
+
+            // Update the flag
+            iPrivate->iSaveImages = aValue;
+
+            // Emit dataChanged for changed rows
+            const int changedCount = rows.count();
+            if (changedCount > 0) {
+                const QVector<int> role(1, Private::HasImageRole);
+                for (int i = 0; i < changedCount; i++) {
+                    const QModelIndex modelIndex(index(rows.at(i), 0));
+                    Q_EMIT dataChanged(modelIndex, modelIndex, role);
+                }
+            }
+
+            // Actually delete all files on a separate thread
             iPrivate->iThreadPool->start(new PurgeTask);
             // And assume that we don't have images anymore
             if (iPrivate->iHaveImages != Private::No) {
                 iPrivate->iHaveImages = Private::No;
                 Q_EMIT hasImagesChanged();
             }
+        } else {
+            iPrivate->iSaveImages = aValue;
         }
         Q_EMIT saveImagesChanged();
     }
@@ -475,7 +534,7 @@ QVariantMap HistoryModel::get(int aRow)
     QVariantMap map;
     QModelIndex modelIndex = index(aRow, 0);
     for (int i = 0; i < Private::NUM_FIELDS; i++) {
-        QVariant value = data(modelIndex, Qt::UserRole + i);
+        QVariant value = data(modelIndex, Private::FirstRole + i);
         if (value.isValid()) {
             map.insert(Private::DB_FIELD[i], value);
             if (i == Private::FIELD_ID) {
@@ -483,12 +542,7 @@ QVariantMap HistoryModel::get(int aRow)
             }
         }
     }
-    // Addition field telling QML whether image file exists
-    static const QString HAS_IMAGE("hasImage");
-    QString path(Database::imageDir().path() + QDir::separator() + id +
-        HistoryImageProvider::IMAGE_EXT);
-    map.insert(HAS_IMAGE, QVariant::fromValue(QFile::exists(path)));
-
+    map.insert(Private::HAS_IMAGE, data(modelIndex, Private::HasImageRole));
     HDEBUG(aRow << map);
     return map;
 }

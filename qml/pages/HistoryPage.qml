@@ -2,7 +2,7 @@
 The MIT License (MIT)
 
 Copyright (c) 2014 Steffen Förster
-Copyright (c) 2018-2019 Slava Monich
+Copyright (c) 2018-2020 Slava Monich
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -52,6 +52,8 @@ Page {
         }
     }
 
+    onIsPortraitChanged: historyList.positionViewAtIndex(historyList.currentIndex, ListView.Visible)
+
     Notification {
         id: clipboardNotification
 
@@ -67,7 +69,6 @@ Page {
         id: historyList
 
         anchors.fill: parent
-        width: parent.width
         spacing: 0
 
         header: PageHeader {
@@ -116,19 +117,20 @@ Page {
             }
 
             onClicked: {
-                var historyItem = HistoryModel.get(index)
-                var item = delegate
+                var list = historyList
                 var stack = pageStack
-                stack.push("TextPage.qml", {
-                    hasImage: historyItem.hasImage,
-                    recordId: historyItem.id,
-                    text: historyItem.value,
-                    format: Utils.barcodeFormat(historyItem.format),
-                    timestamp: HistoryModel.formatTimestamp(historyItem.timestamp),
-                    canDelete: true
-                }).deleteEntry.connect(function() {
+                var codePage = stack.push("CodePage.qml", {
+                    model: historyList.model,
+                    currentIndex: model.index
+                })
+                codePage.deleteItemAt.connect(function(index) {
+                    list.positionViewAtIndex(index, ListView.Visible)
+                    list.currentIndex = index
                     stack.pop()
-                    item.deleteItem()
+                    list.currentItem.deleteItem()
+                })
+                codePage.requestIndex.connect(function(index) {
+                    list.positionViewAtIndex(index, ListView.Visible)
                 })
             }
 
