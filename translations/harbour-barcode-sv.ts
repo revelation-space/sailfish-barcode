@@ -384,5 +384,10 @@
         <extracomment>Hint label</extracomment>
         <translation type="unfinished">Kopiera valda koder till urklipp</translation>
     </message>
+    <message id="hint-history_swipe">
+        <source>Swipe to see other history entries</source>
+        <extracomment>Hint text for a swipe (either left or right)</extracomment>
+        <translation type="unfinished">Svep för att se andra historikposter</translation>
+    </message>
 </context>
 </TS>

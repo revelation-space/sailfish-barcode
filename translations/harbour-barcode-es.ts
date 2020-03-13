@@ -384,5 +384,10 @@
         <extracomment>Hint label</extracomment>
         <translation type="unfinished">Copiar códigos seleccionados al portapapeles</translation>
     </message>
+    <message id="hint-history_swipe">
+        <source>Swipe to see other history entries</source>
+        <extracomment>Hint text for a swipe (either left or right)</extracomment>
+        <translation type="unfinished">Desliza para ver otras entradas del historial</translation>
+    </message>
 </context>
 </TS>

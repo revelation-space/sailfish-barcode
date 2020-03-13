@@ -384,5 +384,10 @@
         <extracomment>Hint label</extracomment>
         <translation type="unfinished">Copiez les codes sélectionnés dans le presse-papiers</translation>
     </message>
+    <message id="hint-history_swipe">
+        <source>Swipe to see other history entries</source>
+        <extracomment>Hint text for a swipe (either left or right)</extracomment>
+        <translation type="unfinished">Balayez pour voir d&apos;autres entrées de l&apos;historique</translation>
+    </message>
 </context>
 </TS>

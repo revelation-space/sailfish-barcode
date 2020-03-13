@@ -384,5 +384,10 @@
         <extracomment>Hint label</extracomment>
         <translation>Copy selected codes to clipboard</translation>
     </message>
+    <message id="hint-history_swipe">
+        <source>Swipe to see other history entries</source>
+        <extracomment>Hint text for a swipe (either left or right)</extracomment>
+        <translation>Swipe to see other history entries</translation>
+    </message>
 </context>
 </TS>

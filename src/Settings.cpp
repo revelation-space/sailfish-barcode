@@ -54,6 +54,8 @@ class Settings::Private {
 public:
     Private(Settings* aSettings);
 
+    static const QString HINTS_ROOT;
+
 public:
     MGConfItem* iSound;
     MGConfItem* iDigitalZoom;
@@ -67,6 +69,8 @@ public:
     MGConfItem* iWideMode;
     MGConfItem* iOrientation;
 };
+
+const QString Settings::Private::HINTS_ROOT(DCONF_PATH "hints/");
 
 Settings::Private::Private(Settings* aSettings) :
     iSound(new MGConfItem(DCONF_PATH KEY_SOUND, aSettings)),
@@ -107,6 +111,11 @@ Settings::Settings(QObject* aParent) :
 Settings::~Settings()
 {
     delete iPrivate;
+}
+
+QString Settings::hintKey(QString aHintName)
+{
+    return Private::HINTS_ROOT + aHintName;
 }
 
 bool Settings::sound() const

@@ -24,6 +24,10 @@ THE SOFTWARE.
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import org.nemomobile.configuration 1.0
+import harbour.barcode 1.0
+
+import "../harbour"
 
 Page {
     id: codePage
@@ -75,5 +79,40 @@ Page {
             canDelete: true
             onDeleteEntry: codePage.deleteItemAt(model.index)
         }
+    }
+
+    Loader {
+        id: historySwipeHintLoader
+
+        anchors.fill: parent
+        active: opacity > 0
+        opacity: (hintNeeded || running) ? 1 : 0
+        readonly property bool running: item ? item.hintRunning : false
+        readonly property bool hintNeeded: historySwipeCount.value < Settings.MaximumHintCount &&
+            codePage.status === PageStatus.Active && slideView.count > 1 && !hintSeen
+        property bool hintSeen
+        sourceComponent: Component {
+            HarbourHorizontalSwipeHint {
+                //: Hint text for a swipe (either left or right)
+                //% "Swipe to see other history entries"
+                text: qsTrId("hint-history_swipe")
+                hintEnabled: historySwipeHintLoader.hintNeeded
+                bothWays: true
+                loops: 1
+                onHintShown: {
+                    historySwipeCount.value++
+                    historySwipeHintLoader.hintSeen = true
+                }
+            }
+        }
+
+        ConfigurationValue {
+            id: historySwipeCount
+
+            key: AppSettings.hintKey("historySwipe")
+            defaultValue: 0
+        }
+
+        Behavior on opacity { FadeAnimation {} }
     }
 }

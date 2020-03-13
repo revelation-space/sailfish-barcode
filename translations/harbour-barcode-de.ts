@@ -384,5 +384,10 @@
         <extracomment>Hint label</extracomment>
         <translation>Ausgewählte Codes in die Zwischenablage kopieren</translation>
     </message>
+    <message id="hint-history_swipe">
+        <source>Swipe to see other history entries</source>
+        <extracomment>Hint text for a swipe (either left or right)</extracomment>
+        <translation type="unfinished">Wische um andere Verlaufseinträge anzuzeigen</translation>
+    </message>
 </context>
 </TS>

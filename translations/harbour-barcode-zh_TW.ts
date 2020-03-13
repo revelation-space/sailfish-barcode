@@ -382,5 +382,10 @@
         <extracomment>Hint label</extracomment>
         <translation type="unfinished">將所選代碼複製到剪貼板</translation>
     </message>
+    <message id="hint-history_swipe">
+        <source>Swipe to see other history entries</source>
+        <extracomment>Hint text for a swipe (either left or right)</extracomment>
+        <translation type="unfinished">滑動即可查看其他歷史記錄條目</translation>
+    </message>
 </context>
 </TS>

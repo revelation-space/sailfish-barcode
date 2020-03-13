@@ -54,6 +54,7 @@ class Settings : public QObject {
     Q_PROPERTY(bool wideMode READ wideMode WRITE setWideMode NOTIFY wideModeChanged)
     Q_PROPERTY(Orientation orientation READ orientation WRITE setOrientation NOTIFY orientationChanged)
     Q_ENUMS(Orientation)
+    Q_ENUMS(Constants)
 
 public:
     enum Orientation {
@@ -65,8 +66,14 @@ public:
         OrientationAny
     };
 
+    enum Constants {
+        MaximumHintCount = 2
+    };
+
     explicit Settings(QObject* aParent = Q_NULLPTR);
     ~Settings();
+
+    Q_INVOKABLE static QString hintKey(QString aHintName);
 
     bool sound() const;
     void setSound(bool aValue);

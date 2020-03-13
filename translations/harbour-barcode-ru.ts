@@ -71,7 +71,7 @@
     <message id="scan-status-nothing_found">
         <source>No code detected! Try again.</source>
         <extracomment>Scan status label</extracomment>
-        <translation>Код не найден! Попробуйте снова.</translation>
+        <translation>Код не найден! Попробуйте ещё раз.</translation>
     </message>
     <message id="settings-title">
         <source>Settings</source>
@@ -385,6 +385,11 @@
         <source>Copy selected codes to clipboard</source>
         <extracomment>Hint label</extracomment>
         <translation>Скопировать выделенные коды в буфер обмена</translation>
+    </message>
+    <message id="hint-history_swipe">
+        <source>Swipe to see other history entries</source>
+        <extracomment>Hint text for a swipe (either left or right)</extracomment>
+        <translation>Можно перейти к соседней записи при помощи жеста</translation>
     </message>
 </context>
 </TS>

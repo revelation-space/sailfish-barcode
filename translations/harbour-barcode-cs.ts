@@ -386,5 +386,10 @@
         <extracomment>Hint label</extracomment>
         <translation type="unfinished">Zkopírujte vybrané kódy do schránky</translation>
     </message>
+    <message id="hint-history_swipe">
+        <source>Swipe to see other history entries</source>
+        <extracomment>Hint text for a swipe (either left or right)</extracomment>
+        <translation type="unfinished">Pomocí gesta můžete přejít na další záznam</translation>
+    </message>
 </context>
 </TS>

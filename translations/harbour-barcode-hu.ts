@@ -382,5 +382,10 @@
         <extracomment>Hint label</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message id="hint-history_swipe">
+        <source>Swipe to see other history entries</source>
+        <extracomment>Hint text for a swipe (either left or right)</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
