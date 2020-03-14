@@ -2,7 +2,7 @@
 The MIT License (MIT)
 
 Copyright (c) 2014 Steffen Förster
-Copyright (c) 2018-2019 Slava Monich
+Copyright (c) 2018-2020 Slava Monich
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -393,6 +393,11 @@ Page {
                     //% "%1 second(s)"
                     qsTrId("settings-marker-slider_value",value).arg(value)
                 onSliderValueChanged: AppSettings.resultViewDuration = value
+            }
+
+            Item {
+                width: 1
+                height: Theme.paddingMedium
             }
         }
     }
