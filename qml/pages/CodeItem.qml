@@ -198,7 +198,7 @@ Item {
     ContactCard { id: card; PullDownMenu { MenuItem { id: saveMenu; onClicked: page.saveContact(); }}}}",
                             codeItem, "ContactPage")
                         pageStack.push(page, {
-                            allowedOrientations: codeItem.allowedOrientations,
+                            allowedOrientations: window.allowedOrientations,
                             contact: codeItem.vcard.contact(),
                             //: Pulley menu item (saves contact)
                             //% "Save"
