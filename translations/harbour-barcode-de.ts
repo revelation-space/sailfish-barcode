@@ -91,7 +91,7 @@
     <message id="settings-autoscan-label">
         <source>Scan on start</source>
         <extracomment>Switch button text</extracomment>
-        <translation>Scannen bei Programmstart</translation>
+        <translation>Scannen beim Programmstart</translation>
     </message>
     <message id="settings-save_images-label">
         <source>Save barcode images</source>
@@ -126,7 +126,7 @@
     <message id="settings-history-slider_value" numerus="yes">
         <source>%1 item(s)</source>
         <extracomment>History slider value</extracomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 Eintrag</numerusform>
             <numerusform>%1 Einträge</numerusform>
         </translation>
@@ -134,7 +134,7 @@
     <message id="settings-history-confirm_resize">
         <source>Confirm resize</source>
         <extracomment>Button label</extracomment>
-        <translation>Änerung bestätigen</translation>
+        <translation>Änderung bestätigen</translation>
     </message>
     <message id="settings-history-cancel">
         <source>Cancel</source>
@@ -144,7 +144,7 @@
     <message id="settings-marker-section">
         <source>Marker</source>
         <extracomment>Section header</extracomment>
-        <translation>Markierung</translation>
+        <translation>Markierungen</translation>
     </message>
     <message id="settings-marker-slider_label">
         <source>Mark detected code</source>
@@ -154,7 +154,7 @@
     <message id="settings-marker-slider_value" numerus="yes">
         <source>%1 second(s)</source>
         <extracomment>Marker slider value</extracomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 Sekunde</numerusform>
             <numerusform>%1 Sekunden</numerusform>
         </translation>
@@ -182,7 +182,7 @@
     <message id="history-menu-copy">
         <source>Copy to clipboard</source>
         <extracomment>Context menu item</extracomment>
-        <translation>In die Zwichenablage kopieren</translation>
+        <translation>In die Zwischenablage kopieren</translation>
     </message>
     <message id="history-menu-delete_remorse">
         <source>Deleting</source>
@@ -387,7 +387,7 @@
     <message id="hint-history_swipe">
         <source>Swipe to see other history entries</source>
         <extracomment>Hint text for a swipe (either left or right)</extracomment>
-        <translation type="unfinished">Wische um andere Verlaufseinträge anzuzeigen</translation>
+        <translation type="unfinished">Wisch um andere Verlaufseinträge anzuzeigen</translation>
     </message>
 </context>
 </TS>

@@ -317,7 +317,7 @@
     <message id="hint-open_url">
         <source>Open URL in default application</source>
         <extracomment>Hint label</extracomment>
-        <translation type="unfinished">Abrir URL no aplicativo padrão</translation>
+        <translation>Abrir URL na aplicação padrão</translation>
     </message>
     <message id="settings-display-section">
         <source>Display</source>
@@ -387,7 +387,7 @@
     <message id="hint-history_swipe">
         <source>Swipe to see other history entries</source>
         <extracomment>Hint text for a swipe (either left or right)</extracomment>
-        <translation type="unfinished">Desliza para ver outras entradas do histórico</translation>
+        <translation>Desliza para ver outras entradas do histórico</translation>
     </message>
 </context>
 </TS>
