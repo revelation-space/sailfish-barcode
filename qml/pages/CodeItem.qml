@@ -44,7 +44,7 @@ Item {
     readonly property string normalizedText: Utils.convertLineBreaks(text)
     readonly property bool isUrl: Utils.isUrl(text) && !isVCard && !isVEvent
     readonly property bool isLink: Utils.isLink(text) && !isVCard && !isVEvent
-    readonly property bool isVCard: Utils.isVcard(normalizedText) && !isVEvent
+    readonly property bool isVCard: (meCardConverter.vcard.length > 0 || Utils.isVcard(normalizedText)) && !isVEvent
     readonly property bool isVEvent: Utils.isVevent(normalizedText)
     readonly property bool haveContact: vcard ? (vcard.count > 0) : false
     readonly property bool haveEvent: !!calendarEvent.fileName
@@ -52,20 +52,33 @@ Item {
 
     signal deleteEntry()
 
+    function updateVcard() {
+        if (vcard) {
+            vcard.content = meCardConverter.vcard ? meCardConverter.vcard : normalizedText
+        }
+    }
+
     onNormalizedTextChanged: {
         textArea.text = normalizedText
-        if (vcard) {
-            vcard.content = normalizedText
-        }
+        updateVcard()
     }
 
     onIsVCardChanged: {
         if (isVCard && !vcard) {
             var component = Qt.createComponent("VCard.qml");
             if (component.status === Component.Ready) {
-                vcard = component.createObject(codeItem, { content: text })
+                vcard = component.createObject(codeItem, {
+                    content: meCardConverter.vcard ? meCardConverter.vcard : normalizedText
+                })
             }
         }
+    }
+
+    MeCardConverter {
+        id: meCardConverter
+
+        mecard: normalizedText
+        onVcardChanged: updateVcard()
     }
 
     TemporaryFile {
@@ -146,6 +159,7 @@ Item {
             Button {
                 id: button
 
+                readonly property bool isNeeded: text.length > 0
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: {
                     if (isLink) {
@@ -180,7 +194,7 @@ Item {
                         return ""
                     }
                 }
-                visible: text.length > 0
+                visible: isNeeded
                 enabled: !holdOffTimer.running
                 onClicked: {
                     if (isUrl) {
@@ -227,7 +241,7 @@ Item {
                 readonly property bool isError: receiptFetcher.state === ReceiptFetcher.StateFailure
 
                 visible: height > 0
-                height: (isChecking || isError) ? Theme.itemSizeSmall : button.visible ? Theme.paddingLarge : 0
+                height: (isChecking || isError) ? Theme.itemSizeSmall : (button.isNeeded > 0) ? Theme.paddingLarge : 0
                 width: parent.width
 
                 Row {

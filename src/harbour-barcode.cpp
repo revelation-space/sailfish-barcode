@@ -47,6 +47,7 @@ THE SOFTWARE.
 #include "Database.h"
 #include "HistoryImageProvider.h"
 #include "HistoryModel.h"
+#include "MeCardConverter.h"
 #include "OfdReceiptFetcher.h"
 #include "Settings.h"
 
@@ -66,6 +67,7 @@ static void register_types(QQmlEngine* engine, const char* uri, int v1, int v2)
     qmlRegisterType<BarcodeScanner>(uri, v1, v2, "BarcodeScanner");
     qmlRegisterType<OfdReceiptFetcher>(uri, v1, v2, "ReceiptFetcher");
     qmlRegisterType<Settings>(uri, v1, v2, "Settings");
+    qmlRegisterType<MeCardConverter>(uri, v1, v2, "MeCardConverter");
     qmlRegisterSingletonType<HistoryModel>(uri, v1, v2, "HistoryModel", HistoryModel::createSingleton);
     qmlRegisterSingletonType<BarcodeUtils>(uri, v1, v2, "BarcodeUtils", BarcodeUtils::createSingleton);
 }

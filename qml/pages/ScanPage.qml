@@ -480,7 +480,9 @@ Page {
                 property var vcard: null
                 readonly property bool haveContact: vcard && vcard.count > 0
                 readonly property string normalizedText: Utils.convertLineBreaks(text)
-                readonly property bool isVCard: Utils.isVcard(normalizedText)
+                readonly property string vcardText: (meCardConverter.vcard.length > 0) ? meCardConverter.vcard :
+                    Utils.isVcard(normalizedText) ? normalizedText : ""
+                readonly property bool isVCard: vcardText.length > 0
                 readonly property bool isLink: Utils.isLink(text)
                 readonly property bool isUrl: Utils.isUrl(text)
 
@@ -498,12 +500,14 @@ Page {
                     clickableResult.format = ""
                 }
 
-                onIsVCardChanged: {
-                    if (isVCard) {
-                        if (!vcard) {
+                onVcardTextChanged: {
+                    if (vcardText.length > 0) {
+                        if (vcard) {
+                            vcard.content = vcardText
+                        } else {
                             var component = Qt.createComponent("VCard.qml")
                             if (component.status === Component.Ready) {
-                                vcard = component.createObject(scanPage, { content: normalizedText })
+                                vcard = component.createObject(scanPage, { content: vcardText })
                             }
                         }
                     } else {
@@ -519,6 +523,12 @@ Page {
                 visible: opacity > 0.0
 
                 Behavior on opacity { FadeAnimation { } }
+
+                MeCardConverter {
+                    id: meCardConverter
+
+                    mecard: clickableResult.normalizedText
+                }
 
                 // Clear results when the first history item gets deleted
                 Connections {
@@ -591,11 +601,13 @@ Page {
                         onShowHint: scanPage.showHint(hint)
                         onHideHint: scanPage.hideHint()
                         onClicked: {
+                            // Workaround for Sailfish.Contacts not being allowed in harbour apps
                             var page = Qt.createQmlObject("import QtQuick 2.0;import Sailfish.Silica 1.0;import Sailfish.Contacts 1.0; \
     Page { id: page; signal saveContact(); property alias contact: card.contact; property alias saveText: saveMenu.text; \
     ContactCard { id: card; PullDownMenu { MenuItem { id: saveMenu; onClicked: page.saveContact(); }}}}",
                                 scanPage, "ContactPage")
                             pageStack.push(page, {
+                                allowedOrientations: window.allowedOrientations,
                                 contact: clickableResult.vcard.contact(),
                                 //: Pulley menu item (saves contact)
                                 //% "Save"

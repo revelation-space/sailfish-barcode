@@ -3,7 +3,7 @@ PREFIX = harbour
 TARGET = $${PREFIX}-$${NAME}
 
 CONFIG += sailfishapp link_pkgconfig
-PKGCONFIG += sailfishapp mlite5
+PKGCONFIG += sailfishapp mlite5 glib-2.0
 
 QT += multimedia concurrent sql network
 
@@ -15,6 +15,7 @@ isEmpty(VERSION) {
 }
 
 QMAKE_CXXFLAGS += -Wno-unused-parameter
+QMAKE_CFLAGS += -Wno-implicit-fallthrough
 
 DEFINES += \
   APP_VERSION=\\\"$$VERSION\\\" \
@@ -36,6 +37,7 @@ SOURCES += \
     src/harbour-barcode.cpp \
     src/HistoryImageProvider.cpp \
     src/HistoryModel.cpp \
+    src/MeCardConverter.cpp \
     src/OfdReceiptFetcher.cpp \
     src/Settings.cpp \
     src/scanner/BarcodeScanner.cpp \
@@ -48,6 +50,7 @@ HEADERS += \
     src/Database.h \
     src/HistoryImageProvider.h \
     src/HistoryModel.h \
+    src/MeCardConverter.h \
     src/OfdReceiptFetcher.h \
     src/Settings.h \
     src/scanner/BarcodeScanner.h \
@@ -348,6 +351,24 @@ HEADERS += \
     src/zxing/zxing/datamatrix/detector/DetectorException.h \
     src/zxing/zxing/datamatrix/detector/Detector.h \
     src/zxing/zxing/datamatrix/Version.h
+
+# libmc
+
+LIBMC_LIB_DIR = libmc
+LIBMC_LIB_INCLUDE = $${LIBMC_LIB_DIR}/include
+LIBMC_LIB_SRC = $${LIBMC_LIB_DIR}/src
+
+INCLUDEPATH += $${LIBMC_LIB_INCLUDE}
+
+SOURCES += \
+    $${LIBMC_LIB_SRC}/mc_block.c \
+    $${LIBMC_LIB_SRC}/mc_mecard.c \
+    $${LIBMC_LIB_SRC}/mc_record.c
+
+HEADERS += \
+    $${LIBMC_LIB_INCLUDE}/mc_mecard.h \
+    $${LIBMC_LIB_INCLUDE}/mc_record.h \
+    $${LIBMC_LIB_INCLUDE}/mc_types.h
 
 # Icons
 ICON_SIZES = 86 108 128 256

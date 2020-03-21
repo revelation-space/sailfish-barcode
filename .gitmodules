@@ -1,3 +1,6 @@
 [submodule "harbour-lib"]
 	path = harbour-lib
 	url = https://github.com/monich/harbour-lib.git
+[submodule "libmc"]
+	path = libmc
+	url = https://github.com/monich/libmc.git
