@@ -65,6 +65,11 @@ Page {
         }
     }
 
+    Rectangle {
+        anchors.fill: parent
+        color: "#2e2e2e"
+    }
+
     SilicaListView {
         id: historyList
 

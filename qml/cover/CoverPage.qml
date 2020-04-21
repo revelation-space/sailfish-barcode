@@ -38,7 +38,7 @@ CoverBackground {
 
         Image {
             readonly property int size: Math.floor(cover.width * 0.56) & (-2)
-            source: HarbourTheme.darkOnLight ? Qt.resolvedUrl("cover-image-dark.svg") :  Qt.resolvedUrl("cover-image.svg")
+            source: Qt.resolvedUrl("aurora-scan.gif")
             fillMode: Image.PreserveAspectFit
             anchors.horizontalCenter: parent.horizontalCenter
             asynchronous: true
@@ -48,7 +48,7 @@ CoverBackground {
         Label {
             anchors.horizontalCenter: parent.horizontalCenter
             color: Theme.primaryColor
-            text: "CodeReader"
+            text: "Аврора.Скан"
             font.bold: true
         }
     }

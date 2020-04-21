@@ -40,58 +40,14 @@ Item {
     property bool isPortrait
     property bool canDelete: true
     property real offsetY
-
-    readonly property string normalizedText: Utils.convertLineBreaks(text)
-    readonly property bool isUrl: Utils.isUrl(text) && !isVCard && !isVEvent
-    readonly property bool isLink: Utils.isLink(text) && !isVCard && !isVEvent
-    readonly property bool isVCard: (meCardConverter.vcard.length > 0 || Utils.isVcard(normalizedText)) && !isVEvent
-    readonly property bool isVEvent: Utils.isVevent(normalizedText)
-    readonly property bool haveContact: vcard ? (vcard.count > 0) : false
-    readonly property bool haveEvent: !!calendarEvent.fileName
-    property var vcard
+    property variant stringList: text.split("\r\n")
+    property bool isParsed: (stringList.length > 1)
 
     signal deleteEntry()
 
-    function updateVcard() {
-        if (vcard) {
-            vcard.content = meCardConverter.vcard ? meCardConverter.vcard : normalizedText
-        }
-    }
-
-    onNormalizedTextChanged: {
-        textArea.text = normalizedText
-        updateVcard()
-    }
-
-    onIsVCardChanged: {
-        if (isVCard && !vcard) {
-            var component = Qt.createComponent("VCard.qml");
-            if (component.status === Component.Ready) {
-                vcard = component.createObject(codeItem, {
-                    content: meCardConverter.vcard ? meCardConverter.vcard : normalizedText
-                })
-            }
-        }
-    }
-
-    MeCardConverter {
-        id: meCardConverter
-
-        mecard: normalizedText
-        onVcardChanged: updateVcard()
-    }
-
-    TemporaryFile {
-        id: calendarEvent
-
-        content: isVEvent ? Utils.calendarText(normalizedText) : ""
-        fileTemplate: isVEvent ? "barcodeXXXXXX.vcs" : ""
-    }
-
-    ReceiptFetcher {
-        id: receiptFetcher
-
-        code: codeItem.text
+    Rectangle {
+        anchors.fill: parent
+        color: "#2e2e2e"
     }
 
     SilicaFlickable {
@@ -120,196 +76,143 @@ Item {
             PageHeader {
                 id: pageHeader
 
-                title: Utils.barcodeFormat(codeItem.format)
+                title: "QR код"
                 description: HistoryModel.formatTimestamp(codeItem.timestamp)
             }
 
-            TextArea {
-                id: textArea
+            Label {
                 width: parent.width
-                selectionMode: TextEdit.SelectWords
-                labelVisible: true
-                readOnly: false
-                wrapMode: TextEdit.Wrap
-                property int lastCursorPosition
-                property int currentCursorPosition
-                property bool settingTextFromTextChangedHandler
-                onCursorPositionChanged: {
-                    lastCursorPosition = currentCursorPosition
-                    currentCursorPosition = cursorPosition
-                }
-                onTextChanged: {
-                    if (settingTextFromTextChangedHandler) {
-                        // TextArea isn't just accepting the text, sometimes
-                        // it internally mutates it which can send us into
-                        // an infinite setText/textChanged/setText recursion.
-                        // We don't want that to happen.
-                        console.warn("refusing to recurse!")
-                    } else if (text !== codeItem.normalizedText) {
-                        settingTextFromTextChangedHandler = true
-                        text = codeItem.normalizedText
-                        settingTextFromTextChangedHandler = false
-                        // The text doesn't actually get updated until the
-                        // cursor position changes
-                        cursorPosition = lastCursorPosition
-                    }
-                }
+                visible: isParsed
+                leftPadding: Theme.paddingLarge
+                text: "Имя"
+                bottomPadding: Theme.paddingSmall
             }
 
-            Button {
-                id: button
-
-                readonly property bool isNeeded: text.length > 0
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: {
-                    if (isLink) {
-                        //: Button text
-                        //% "Open link"
-                        return qsTrId("text-open_link")
-                    } else if (isUrl) {
-                        //: Button text
-                        //% "Open URL"
-                        return qsTrId("text-open_url")
-                    } else if (haveContact) {
-                        //: Button text
-                        //% "Contact card"
-                        return qsTrId("text-contact_card")
-                    } else if (haveEvent) {
-                        //: Button text
-                        //% "Add to calendar"
-                        return qsTrId("text-add_to_calendar")
-                    } else if (receiptFetcher.state === ReceiptFetcher.StateChecking) {
-                        return holdOffTimer.running ?
-                            //: Button text
-                            //% "Fetching..."
-                            qsTrId("text-fetching_receipt") :
-                            //: Button label (cancel network operation)
-                            //% "Cancel"
-                            qsTrId("text-cancel_fetching")
-                    } else if (receiptFetcher.state !== ReceiptFetcher.StateIdle) {
-                        //: Button text
-                        //% "Fetch receipt"
-                        return qsTrId("text-fetch_receipt")
-                    } else {
-                        return ""
-                    }
-                }
-                visible: isNeeded
-                enabled: !holdOffTimer.running
-                onClicked: {
-                    if (isUrl) {
-                        console.log("opening", codeItem.text)
-                        Qt.openUrlExternally(codeItem.text)
-                        holdOffTimer.restart()
-                    } else if (haveEvent) {
-                        console.log("importing", calendarEvent.url)
-                        Qt.openUrlExternally(calendarEvent.url)
-                        holdOffTimer.restart()
-                    } else if (haveContact) {
-                        // Workaround for Sailfish.Contacts not being allowed in harbour apps
-                        var page = Qt.createQmlObject("import QtQuick 2.0;import Sailfish.Silica 1.0;import Sailfish.Contacts 1.0; \
-    Page { id: page; signal saveContact(); property alias contact: card.contact; property alias saveText: saveMenu.text; \
-    ContactCard { id: card; PullDownMenu { MenuItem { id: saveMenu; onClicked: page.saveContact(); }}}}",
-                            codeItem, "ContactPage")
-                        pageStack.push(page, {
-                            allowedOrientations: window.allowedOrientations,
-                            contact: codeItem.vcard.contact(),
-                            //: Pulley menu item (saves contact)
-                            //% "Save"
-                            saveText: qsTrId("contact-menu-save")
-                        }).saveContact.connect(function() {
-                           pageStack.pop()
-                           codeItem.vcard.importContact()
-                        })
-                    } else if (receiptFetcher.state === ReceiptFetcher.StateChecking) {
-                        receiptFetcher.cancel()
-                    } else {
-                        // Fetch Receipt
-                        holdOffTimer.restart()
-                        receiptFetcher.fetch()
-                    }
-                }
-                Timer {
-                    id: holdOffTimer
-
-                    interval: 2000
-                }
-            }
-
-            Item {
-                readonly property bool isChecking: receiptFetcher.state === ReceiptFetcher.StateChecking
-                readonly property bool isError: receiptFetcher.state === ReceiptFetcher.StateFailure
-
-                visible: height > 0
-                height: (isChecking || isError) ? Theme.itemSizeSmall : (button.isNeeded > 0) ? Theme.paddingLarge : 0
+            Rectangle {
                 width: parent.width
-
-                Row {
-                    anchors.centerIn: parent
-                    spacing: Theme.paddingMedium
-                    visible: opacity > 0
-                    opacity: parent.isChecking ? 1 : 0
-
-                    BusyIndicator {
-                        running: parent.opacity != 0
-                        size: BusyIndicatorSize.ExtraSmall
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                    Label {
-                        anchors.verticalCenter: parent.verticalCenter
-                        font.pixelSize: Theme.fontSizeSmall
-                        truncationMode: TruncationMode.Fade
-                        color: Theme.highlightColor
-                        //: Progress label
-                        //% "Contacting %1..."
-                        text: qsTrId("text-fetch_contacting").arg(receiptFetcher.host)
-                    }
-                    Behavior on opacity { FadeAnimation {} }
-                }
+                height: Theme.itemSizeSmall
+                radius: Theme.paddingMedium
+                color: isParsed ? "#e0e0e0" : "#ff6666"
 
                 Label {
-                    anchors.centerIn: parent
-                    font.pixelSize: Theme.fontSizeSmall
-                    truncationMode: TruncationMode.Fade
-                    verticalAlignment: Text.AlignVCenter
-                    color: Theme.highlightColor
-                    visible: opacity > 0
-                    opacity: parent.isError ? 1 : 0
-                    text: {
-                        switch (receiptFetcher.error) {
-                        case ReceiptFetcher.ErrorNotFound:
-                            //: Status label
-                            //% "Receipt not found"
-                            return qsTrId("text-receipt_not_found")
-                        case ReceiptFetcher.ErrorNetwork:
-                            //: Status label
-                            //% "Network error"
-                            return qsTrId("text-network_error")
-                        }
-                        return ""
-                    }
-                    Behavior on opacity { FadeAnimation {} }
+                    id: nameLabel
+                    width: parent.width
+                    wrapMode: Label.Wrap
+                    text: stringList[0]
+                    color: "#2e2e2e"
+                    horizontalAlignment: isParsed ? Text.AlignLeft : Text.AlignHCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    leftPadding: isParsed ? Theme.paddingLarge : 0
                 }
-
-                Behavior on height { SmoothedAnimation { duration: 100 } }
             }
 
-            Item {
+
+            Label {
                 width: parent.width
-                height: receiptView.item ? (receiptView.item.height + Theme.paddingLarge) : 0
-                visible: receiptView.active
+                visible: isParsed
+                leftPadding: Theme.paddingLarge
+                text: "Дата рождения:"
+                bottomPadding: Theme.paddingSmall
+                topPadding: Theme.paddingMedium
+                horizontalAlignment: Text.AlignLeft
+            }
 
-                Loader {
-                    id: receiptView
-
+            Rectangle {
+                width: parent.width
+                visible: isParsed
+                height: Theme.itemSizeSmall
+                radius: Theme.paddingMedium
+                color: "#e0e0e0"
+                Label {
                     width: parent.width
-                    source: receiptFetcher.state === ReceiptFetcher.StateSuccess ? "../components/HtmlView.qml" : ""
-                    onStatusChanged: {
-                        if (status == Loader.Ready) {
-                            item.htmlBody = receiptFetcher.receipt
-                        }
-                    }
+                    visible: isParsed
+                    anchors.verticalCenter: parent.verticalCenter
+                    horizontalAlignment: Text.AlignLeft
+                    leftPadding: Theme.paddingLarge
+                    text: isParsed ? stringList[1] : ""
+                    color: "#2e2e2e"
                 }
+            }
+
+            Label {
+                width: parent.width
+                visible: isParsed
+                leftPadding: Theme.paddingLarge
+                text: "Заявка:"
+                bottomPadding: Theme.paddingSmall
+                topPadding: Theme.paddingMedium
+                horizontalAlignment: Text.AlignLeft
+            }
+
+            Rectangle {
+                width: parent.width
+                visible: isParsed
+                height: Theme.itemSizeSmall
+                radius: Theme.paddingMedium
+                color: "#e0e0e0"
+                Label {
+                    width: parent.width
+                    visible: isParsed
+                    anchors.verticalCenter: parent.verticalCenter
+                    horizontalAlignment: Text.AlignLeft
+                    leftPadding: Theme.paddingLarge
+                    text: isParsed ? stringList[2].substring(7) : ""
+                    color: "#2e2e2e"
+                }
+            }
+
+            Label {
+                width: parent.width
+                visible: isParsed
+                leftPadding: Theme.paddingLarge
+                topPadding: Theme.paddingMedium
+                text: "Паспорт:"
+                bottomPadding: Theme.paddingSmall
+            }
+
+            Rectangle {
+                width: parent.width
+                visible: isParsed
+                height: Theme.itemSizeSmall
+                radius: Theme.paddingMedium
+                color: "#e0e0e0"
+                Label {
+                    width: parent.width
+                    anchors.verticalCenter: parent.verticalCenter
+                    horizontalAlignment: Text.AlignLeft
+                    text: isParsed ? stringList[3].substring(9) : ""
+                    leftPadding: Theme.paddingLarge
+                    color: "#2e2e2e"
+                }
+            }
+
+            Rectangle {
+                width: parent.width
+                height: Theme.paddingLarge
+                color: "#2e2e2e"
+                visible: isParsed
+            }
+
+            Rectangle {
+                width: parent.width
+                visible: isParsed
+                height: Theme.itemSizeSmall
+                radius: Theme.paddingMedium
+                color: stringList[4] === "Да" ? "#66ff66" : "#ff6666"
+                Label {
+                    id: encoding
+                    width: parent.width
+                    color: "#2e2e2e"
+                    horizontalAlignment: Text.AlignHCenter
+                    text: stringList[4] === "Да" ? "Шифрование верно" : "Код не зашифрован"
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+
+            Rectangle {
+                width: parent.width
+                height: Theme.paddingLarge
+                color: "#2e2e2e"
             }
 
             Image {

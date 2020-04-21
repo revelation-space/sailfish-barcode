@@ -37,6 +37,12 @@ ListItem {
     property string format
     property bool selected
 
+
+    Rectangle {
+        anchors.fill: parent
+        color: "#2e2e2e"
+    }
+
     Column {
         width: parent.width
         anchors.verticalCenter: parent.verticalCenter

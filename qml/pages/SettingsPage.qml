@@ -84,6 +84,11 @@ Page {
         onOrientationChanged: settingsPage.updateOrientation()
     }
 
+    Rectangle {
+        anchors.fill: parent
+        color: "#2e2e2e"
+    }
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: content.height
@@ -326,74 +331,74 @@ Page {
                 }
             }
 
-            //: Section header
-            //% "Marker"
-            SectionHeader { text: qsTrId("settings-marker-section") }
+//            //: Section header
+//            //% "Marker"
+//            SectionHeader { text: qsTrId("settings-marker-section") }
 
-            Grid {
-                id: colorSelector
+//            Grid {
+//                id: colorSelector
 
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    leftMargin: Theme.horizontalPageMargin
-                    rightMargin: Theme.horizontalPageMargin
-                }
-                columns: settingsPage.isPortrait ? 4 : 8
+//                anchors {
+//                    left: parent.left
+//                    right: parent.right
+//                    leftMargin: Theme.horizontalPageMargin
+//                    rightMargin: Theme.horizontalPageMargin
+//                }
+//                columns: settingsPage.isPortrait ? 4 : 8
 
-                Repeater {
-                    model: colors
+//                Repeater {
+//                    model: colors
 
-                    Item {
-                        width: parent.width/colorSelector.columns
-                        height: parent.width/colorSelector.columns
+//                    Item {
+//                        width: parent.width/colorSelector.columns
+//                        height: parent.width/colorSelector.columns
 
-                        Rectangle {
-                            property real adjustment: (index == currentColor) ? 0 :
-                                colorSelectorBackground.down ? (2 * Theme.paddingMedium) :
-                                (2 * Theme.paddingLarge)
+//                        Rectangle {
+//                            property real adjustment: (index == currentColor) ? 0 :
+//                                colorSelectorBackground.down ? (2 * Theme.paddingMedium) :
+//                                (2 * Theme.paddingLarge)
 
-                            width: parent.width - adjustment
-                            height: parent.height - adjustment
-                            radius: Theme.paddingLarge
-                            color: colors[index]
-                            anchors.centerIn: parent
+//                            width: parent.width - adjustment
+//                            height: parent.height - adjustment
+//                            radius: Theme.paddingLarge
+//                            color: colors[index]
+//                            anchors.centerIn: parent
 
-                            Behavior on adjustment { SmoothedAnimation { duration: 100 } }
-                        }
+//                            Behavior on adjustment { SmoothedAnimation { duration: 100 } }
+//                        }
 
-                        MouseArea {
-                            id: colorSelectorBackground
+//                        MouseArea {
+//                            id: colorSelectorBackground
 
-                            readonly property bool down: pressed && containsMouse
-                            anchors.fill: parent
-                            onClicked: {
-                                currentColor = index
-                                AppSettings.markerColor = colors[index]
-                            }
-                        }
-                    }
-                }
-            }
+//                            readonly property bool down: pressed && containsMouse
+//                            anchors.fill: parent
+//                            onClicked: {
+//                                currentColor = index
+//                                AppSettings.markerColor = colors[index]
+//                            }
+//                        }
+//                    }
+//                }
+//            }
 
-            Slider {
-                width: parent.width
-                minimumValue: 0
-                maximumValue: 15
-                value: AppSettings.resultViewDuration
-                stepSize: 1
-                //: Slider label
-                //% "Mark detected code"
-                label: qsTrId("settings-marker-slider_label")
-                valueText: value === 0 ?
-                    //: Generic slider value
-                    //% "deactivated"
-                    qsTrId("settings-value-deactivated") :
-                    //: Marker slider value
-                    //% "%1 second(s)"
-                    qsTrId("settings-marker-slider_value",value).arg(value)
-                onSliderValueChanged: AppSettings.resultViewDuration = value
-            }
+//            Slider {
+//                width: parent.width
+//                minimumValue: 0
+//                maximumValue: 15
+//                value: AppSettings.resultViewDuration
+//                stepSize: 1
+//                //: Slider label
+//                //% "Mark detected code"
+//                label: qsTrId("settings-marker-slider_label")
+//                valueText: value === 0 ?
+//                    //: Generic slider value
+//                    //% "deactivated"
+//                    qsTrId("settings-value-deactivated") :
+//                    //: Marker slider value
+//                    //% "%1 second(s)"
+//                    qsTrId("settings-marker-slider_value",value).arg(value)
+//                onSliderValueChanged: AppSettings.resultViewDuration = value
+//            }
 
             Item {
                 width: 1

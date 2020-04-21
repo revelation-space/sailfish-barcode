@@ -54,6 +54,12 @@ Page {
         }
     }
 
+    Rectangle {
+        anchors.fill: parent
+        color: "#2e2e2e"
+    }
+
+
     Component {
         id: hintComponent
 

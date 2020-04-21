@@ -51,6 +51,12 @@ Item {
         right: parent.right
     }
 
+    Rectangle {
+        anchors.fill: parent
+        color: "#2e2e2e"
+    }
+
+
     HintIconButton {
         id: copyButton
 

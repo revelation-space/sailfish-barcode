@@ -40,6 +40,7 @@ SOURCES += \
     src/MeCardConverter.cpp \
     src/OfdReceiptFetcher.cpp \
     src/Settings.cpp \
+    src/qaesencryption.cpp \
     src/scanner/BarcodeScanner.cpp \
     src/scanner/Decoder.cpp \
     src/scanner/ImageSource.cpp
@@ -53,6 +54,7 @@ HEADERS += \
     src/MeCardConverter.h \
     src/OfdReceiptFetcher.h \
     src/Settings.h \
+    src/qaesencryption.h \
     src/scanner/BarcodeScanner.h \
     src/scanner/Decoder.h \
     src/scanner/ImageSource.h
@@ -61,7 +63,6 @@ OTHER_FILES += \
     qml/cover/CoverPage.qml \
     rpm/harbour-barcode.spec \
     translations/*.ts \
-    icons/*.svg \
     README.md \
     harbour-barcode.desktop \
     qml/harbour-barcode.qml \
@@ -414,12 +415,7 @@ defineTest(addTrFile) {
     export(qm.files)
 }
 
-LANGUAGES = cs da de es fr hu it pl pt ru sv zh_CN zh_TW
-
 addTrFile($${NAME})
-for(l, LANGUAGES) {
-    addTrFile($${NAME}-$$l)
-}
 
 qm.path = $$TRANSLATIONS_PATH
 qm.CONFIG += no_check_exist

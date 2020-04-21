@@ -25,6 +25,8 @@ THE SOFTWARE.
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import harbour.barcode 1.0
+
 
 Page {
     id: textPage
@@ -40,6 +42,12 @@ Page {
 
     signal deleteEntry()
 
+
+    Rectangle {
+        anchors.fill: parent
+        color: "#2e2e2e"
+    }
+
     CodeItem {
         id: codeItem
 
@@ -47,4 +55,5 @@ Page {
         isPortrait: textPage.isPortrait
         onDeleteEntry: textPage.deleteEntry()
     }
+
 }

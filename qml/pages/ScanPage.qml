@@ -77,13 +77,19 @@ Page {
         viewFinder = null
     }
 
+    AESEncryption {
+        id: aes
+    }
+
     function applyResult(image,result) {
         var text = result.text
         console.log(result.format, text)
+        text = aes.startDecoding(text)
         markerImageProvider.image = image
         if (text.length > 0) {
             Clipboard.text = text
             var recId = HistoryModel.insert(image, text, result.format)
+
             clickableResult.setValue(recId, text, result.format)
         }
     }
@@ -207,10 +213,10 @@ Page {
             if (result.ok) {
                 statusText.text = ""
                 applyResult(image, result)
-                var resultViewDuration = AppSettings.resultViewDuration
+                var resultViewDuration = 200
                 if (resultViewDuration > 0) {
                     scanPage.showMarker = true
-                    resultViewTimer.interval = resultViewDuration * 1000
+                    resultViewTimer.interval = resultViewDuration
                     resultViewTimer.restart()
                 }
                 if (AppSettings.sound && viewFinder) {
@@ -249,7 +255,19 @@ Page {
     Timer {
         id: resultViewTimer
 
-        onTriggered: scanPage.showMarker = false
+        onTriggered: {
+            scanPage.showMarker = false
+            pageStack.push("TextPage.qml", {
+                hasImage: AppSettings.saveImages,
+                recordId: clickableResult.recordId,
+                text: clickableResult.text,
+                format: clickableResult.format,
+                canDelete: true
+            }).deleteEntry.connect(function() {
+                pageStack.pop()
+                resultItem.deleteItem()
+            })
+        }
     }
 
     Component {
@@ -284,6 +302,11 @@ Page {
                 text: qsTrId("settings-title")
                 onClicked: pageStack.push("SettingsPage.qml")
             }
+        }
+
+        Rectangle {
+            anchors.fill: parent
+            color: "#2e2e2e"
         }
 
         Item {
@@ -651,7 +674,7 @@ Page {
                     width: parent.width - x
                     anchors.verticalCenter: parent.verticalCenter
                     Label {
-                        text: Utils.getValueText(clickableResult.text)
+                        text: Utils.getValueText(clickableResult.text.split("\r\n")[0])
                         color: resultItem.highlighted ? Theme.highlightColor : Theme.primaryColor
                         width: parent.width
                         truncationMode: TruncationMode.Fade

@@ -45,6 +45,11 @@ Item {
         return model.getPerson(0)
     }
 
+    Rectangle {
+        anchors.fill: parent
+        color: "#2e2e2e"
+    }
+
     PeopleVCardModel {
         id: model
         source: file.fileName

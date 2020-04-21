@@ -50,6 +50,7 @@ THE SOFTWARE.
 #include "MeCardConverter.h"
 #include "OfdReceiptFetcher.h"
 #include "Settings.h"
+#include "qaesencryption.h"
 
 #ifndef APP_VERSION
 #  define ""
@@ -68,6 +69,7 @@ static void register_types(QQmlEngine* engine, const char* uri, int v1, int v2)
     qmlRegisterType<OfdReceiptFetcher>(uri, v1, v2, "ReceiptFetcher");
     qmlRegisterType<Settings>(uri, v1, v2, "Settings");
     qmlRegisterType<MeCardConverter>(uri, v1, v2, "MeCardConverter");
+    qmlRegisterType<QAESEncryption>(uri, v1, v2, "AESEncryption");
     qmlRegisterSingletonType<HistoryModel>(uri, v1, v2, "HistoryModel", HistoryModel::createSingleton);
     qmlRegisterSingletonType<BarcodeUtils>(uri, v1, v2, "BarcodeUtils", BarcodeUtils::createSingleton);
 }
@@ -95,6 +97,10 @@ int main(int argc, char *argv[])
 {
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     bool torchSupported = false;
+    QTextCodec *codec1 = QTextCodec::codecForName("UTF-8");
+    QTextCodec::setCodecForLocale(codec1);
+//    QTextCodec::setCodecForTr(codec1);
+//    QTextCodec::setCodecForCStrings(codec1);
 
     // Parse Qt version to find out what's supported and what's not
     const char* qver = qVersion();
